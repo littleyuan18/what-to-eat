@@ -486,7 +486,7 @@ def render_pick():
     if st.session_state.mood == '全部':
         st.session_state.mood = None
     
-    # 菜系筛���
+    # 菜系筛选
     st.markdown("### 菜系")
     cats = query("SELECT DISTINCT category FROM recipes WHERE source='主菜谱' AND category IS NOT NULL")
     cat_list = ['全部'] + [c['category'] for c in cats]
@@ -868,7 +868,7 @@ def render_stats():
             st.markdown(f"""
             <div class="recipe-card">
               <h4>#{i} {t['name']}</h4>
-              <p>吃过 <b>{t['total_eaten']}</b> 次 · 平均 ★{f"{t['avg_rating']:.1f}" if t['avg_rating'] else '-'} </p>
+              <p>吃过 <b>{t['total_eaten']}</b> 次 · 平均 ★{f"{t['avg_rating']:.1f}" if t['avg_rating'] else '-'}</p>
             </div>
             """, unsafe_allow_html=True)
     else:
