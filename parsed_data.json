@@ -1,1323 +1,1810 @@
 {
- "main_recipes": [
-  {
-   "name": "炒鸡腿肉",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "炒牛肉片",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "煎牛肉饼",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "辣炒鸡翅根",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "卤鸡腿",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "芹菜炒牛肚",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "青椒肉丝",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "无糖可乐鸡翅",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "西红柿牛腩",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "洋葱炒牛肉薄片",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "葱香鸡排",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "水煮肥牛片",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "墨鱼蒸肉饼",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "银耳蒸肉饼",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "攸县香干炒肉",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "豆角鸡肉",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "青椒酿肉",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "豌豆肉沫",
-   "category": "肉",
-   "note": ""
-  },
-  {
-   "name": "清蒸鲈鱼",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "蒸黄蚬子",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "蒜蓉粉丝生蚝",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "辣炒螺丝肉",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "辣炒花甲肉",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "清炒花蛤",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "蚝仔煎蛋",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "银鱼蒸蛋",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮比目鱼",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮鱿鱼花",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮鱿鱼须",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮半壳贻贝",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮小扇贝",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮海虹",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "水煮海螺片",
-   "category": "海鲜",
-   "note": ""
-  },
-  {
-   "name": "煎鸡蛋",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "番茄鸡蛋",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "酸辣鸭血",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "煎豆腐",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "咸蛋黄嫩豆腐",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "白菜豆腐煲",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "青椒茄子擂皮蛋",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒空心菜梗",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒口蘑",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒平菇",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒娃娃菜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "凉拌黄瓜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "凉拌苦瓜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "凉拌木耳",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "凉拌茄子",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "凉拌秋葵",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "清炒丝瓜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮红菜苔",
-   "category": "素菜",
-   "note": "1-2 月"
-  },
-  {
-   "name": "水煮黄瓜花",
-   "category": "素菜",
-   "note": "1-3 月"
-  },
-  {
-   "name": "水煮龙须菜",
-   "category": "素菜",
-   "note": "2-3 月"
-  },
-  {
-   "name": "水煮苋菜",
-   "category": "素菜",
-   "note": "5-7 月"
-  },
-  {
-   "name": "水煮空心菜",
-   "category": "素菜",
-   "note": "6-7 月"
-  },
-  {
-   "name": "水煮红薯叶",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮芦笋",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮生菜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮油菜花",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮油麦菜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮荷兰豆",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮蒿子秆",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "水煮甜杆西蓝花",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "煮黑鸡枞菌",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "煮银耳",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "煮鸭血",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "酸菜金针菇鸭血",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "酸辣土豆丝",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "香菇青菜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "辣炒豆芽",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒花菜",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒四季豆",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "炒杏鲍菇",
-   "category": "素菜",
-   "note": ""
-  },
-  {
-   "name": "蒸红薯",
-   "category": "主食",
-   "note": ""
-  },
-  {
-   "name": "蒸紫薯",
-   "category": "主食",
-   "note": ""
-  },
-  {
-   "name": "蒸玉米",
-   "category": "主食",
-   "note": ""
-  },
-  {
-   "name": "杂粮饭",
-   "category": "主食",
-   "note": ""
-  },
-  {
-   "name": "莜面鱼鱼",
-   "category": "主食",
-   "note": ""
-  },
-  {
-   "name": "莲藕花生炖排骨汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "山药排骨汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "冬瓜排骨汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "萝卜排骨汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "荠菜肉碎汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "银耳肉碎汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "墨鱼肉饼汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "肉碎蒸蛋",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "紫菜肉丝汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "紫菜银鱼酸汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "榛蘑番茄酸汤",
-   "category": "汤",
-   "note": ""
-  },
-  {
-   "name": "丝瓜干贝竹荪汤",
-   "category": "汤",
-   "note": ""
-  }
- ],
- "xianovo": {
-  "半成品": [
-   {
-    "name": "酸菜图林根肠三明治",
-    "subtype": "三明治"
-   },
-   {
-    "name": "火腿金枪鱼色拉三明治",
-    "subtype": "三明治"
-   },
-   {
-    "name": "芥末籽爆汁肠仔面包",
-    "subtype": "面包"
-   },
-   {
-    "name": "北海道鲜牛乳三明治",
-    "subtype": "三明治"
-   },
-   {
-    "name": "牛肉鸡胸双拼可颂三明治",
-    "subtype": "三明治"
-   },
-   {
-    "name": "多谷物迷你汉堡双拼三明治",
-    "subtype": "三明治"
-   },
-   {
-    "name": "酸奶葡萄干夹子蛋糕",
-    "subtype": "蛋糕"
-   },
-   {
-    "name": "生菜玉米蔬菜沙拉",
-    "subtype": "沙拉"
-   },
-   {
-    "name": "蔬菜沙拉",
-    "subtype": "成品菜"
-   }
+  "main_recipes": [
+    {
+      "id": 1,
+      "category": "肉",
+      "name": "炒鸡腿肉",
+      "note": ""
+    },
+    {
+      "id": 2,
+      "category": "肉",
+      "name": "炒牛肉片",
+      "note": ""
+    },
+    {
+      "id": 3,
+      "category": "肉",
+      "name": "煎牛肉饼",
+      "note": ""
+    },
+    {
+      "id": 4,
+      "category": "肉",
+      "name": "辣炒鸡翅根",
+      "note": ""
+    },
+    {
+      "id": 5,
+      "category": "肉",
+      "name": "卤鸡腿",
+      "note": ""
+    },
+    {
+      "id": 6,
+      "category": "肉",
+      "name": "芹菜炒牛肚",
+      "note": ""
+    },
+    {
+      "id": 7,
+      "category": "肉",
+      "name": "青椒肉丝",
+      "note": ""
+    },
+    {
+      "id": 8,
+      "category": "肉",
+      "name": "无糖可乐鸡翅",
+      "note": ""
+    },
+    {
+      "id": 9,
+      "category": "肉",
+      "name": "西红柿牛腩",
+      "note": ""
+    },
+    {
+      "id": 10,
+      "category": "肉",
+      "name": "洋葱炒牛肉薄片",
+      "note": ""
+    },
+    {
+      "id": 11,
+      "category": "肉",
+      "name": "葱香鸡排",
+      "note": ""
+    },
+    {
+      "id": 12,
+      "category": "肉",
+      "name": "水煮肥牛片",
+      "note": ""
+    },
+    {
+      "id": 13,
+      "category": "肉",
+      "name": "墨鱼蒸肉饼",
+      "note": ""
+    },
+    {
+      "id": 14,
+      "category": "肉",
+      "name": "银耳蒸肉饼",
+      "note": ""
+    },
+    {
+      "id": 15,
+      "category": "肉",
+      "name": "攸县香干炒肉",
+      "note": ""
+    },
+    {
+      "id": 16,
+      "category": "肉",
+      "name": "豆角鸡肉",
+      "note": ""
+    },
+    {
+      "id": 17,
+      "category": "肉",
+      "name": "青椒酿肉",
+      "note": ""
+    },
+    {
+      "id": 18,
+      "category": "肉",
+      "name": "豌豆肉沫",
+      "note": ""
+    },
+    {
+      "id": 19,
+      "category": "海鲜",
+      "name": "清蒸鲈鱼",
+      "note": ""
+    },
+    {
+      "id": 20,
+      "category": "海鲜",
+      "name": "蒸黄蚬子",
+      "note": ""
+    },
+    {
+      "id": 21,
+      "category": "海鲜",
+      "name": "蒜蓉粉丝生蚝",
+      "note": ""
+    },
+    {
+      "id": 22,
+      "category": "海鲜",
+      "name": "辣炒螺丝肉",
+      "note": ""
+    },
+    {
+      "id": 23,
+      "category": "海鲜",
+      "name": "辣炒花甲肉",
+      "note": ""
+    },
+    {
+      "id": 24,
+      "category": "海鲜",
+      "name": "清炒花蛤",
+      "note": ""
+    },
+    {
+      "id": 25,
+      "category": "海鲜",
+      "name": "蚝仔煎蛋",
+      "note": ""
+    },
+    {
+      "id": 26,
+      "category": "海鲜",
+      "name": "银鱼蒸蛋",
+      "note": ""
+    },
+    {
+      "id": 27,
+      "category": "海鲜",
+      "name": "水煮比目鱼",
+      "note": ""
+    },
+    {
+      "id": 28,
+      "category": "海鲜",
+      "name": "水煮鱿鱼花",
+      "note": ""
+    },
+    {
+      "id": 29,
+      "category": "海鲜",
+      "name": "水煮鱿鱼须",
+      "note": ""
+    },
+    {
+      "id": 30,
+      "category": "海鲜",
+      "name": "水煮半壳贻贝",
+      "note": ""
+    },
+    {
+      "id": 31,
+      "category": "海鲜",
+      "name": "水煮小扇贝",
+      "note": ""
+    },
+    {
+      "id": 32,
+      "category": "海鲜",
+      "name": "水煮海虹",
+      "note": ""
+    },
+    {
+      "id": 33,
+      "category": "海鲜",
+      "name": "水煮海螺片",
+      "note": ""
+    },
+    {
+      "id": 34,
+      "category": "素菜",
+      "name": "煎鸡蛋",
+      "note": ""
+    },
+    {
+      "id": 35,
+      "category": "素菜",
+      "name": "番茄鸡蛋",
+      "note": ""
+    },
+    {
+      "id": 36,
+      "category": "素菜",
+      "name": "酸辣鸭血",
+      "note": ""
+    },
+    {
+      "id": 37,
+      "category": "素菜",
+      "name": "煎豆腐",
+      "note": ""
+    },
+    {
+      "id": 38,
+      "category": "素菜",
+      "name": "咸蛋黄嫩豆腐",
+      "note": ""
+    },
+    {
+      "id": 39,
+      "category": "素菜",
+      "name": "白菜豆腐煲",
+      "note": ""
+    },
+    {
+      "id": 40,
+      "category": "素菜",
+      "name": "青椒茄子擂皮蛋",
+      "note": ""
+    },
+    {
+      "id": 41,
+      "category": "素菜",
+      "name": "炒空心菜梗",
+      "note": ""
+    },
+    {
+      "id": 42,
+      "category": "素菜",
+      "name": "炒口蘑",
+      "note": ""
+    },
+    {
+      "id": 43,
+      "category": "素菜",
+      "name": "炒平菇",
+      "note": ""
+    },
+    {
+      "id": 44,
+      "category": "素菜",
+      "name": "炒娃娃菜",
+      "note": ""
+    },
+    {
+      "id": 45,
+      "category": "素菜",
+      "name": "凉拌黄瓜",
+      "note": ""
+    },
+    {
+      "id": 46,
+      "category": "素菜",
+      "name": "凉拌苦瓜",
+      "note": ""
+    },
+    {
+      "id": 47,
+      "category": "素菜",
+      "name": "凉拌木耳",
+      "note": ""
+    },
+    {
+      "id": 48,
+      "category": "素菜",
+      "name": "凉拌茄子",
+      "note": ""
+    },
+    {
+      "id": 49,
+      "category": "素菜",
+      "name": "凉拌秋葵",
+      "note": ""
+    },
+    {
+      "id": 50,
+      "category": "素菜",
+      "name": "清炒丝瓜",
+      "note": ""
+    },
+    {
+      "id": 51,
+      "category": "素菜",
+      "name": "水煮红菜苔",
+      "note": "1-2 月"
+    },
+    {
+      "id": 52,
+      "category": "素菜",
+      "name": "水煮黄瓜花",
+      "note": "1-3 月"
+    },
+    {
+      "id": 53,
+      "category": "素菜",
+      "name": "水煮龙须菜",
+      "note": "2-3 月"
+    },
+    {
+      "id": 54,
+      "category": "素菜",
+      "name": "水煮苋菜",
+      "note": "5-7 月"
+    },
+    {
+      "id": 55,
+      "category": "素菜",
+      "name": "水煮空心菜",
+      "note": "6-7 月"
+    },
+    {
+      "id": 56,
+      "category": "素菜",
+      "name": "水煮红薯叶",
+      "note": ""
+    },
+    {
+      "id": 57,
+      "category": "素菜",
+      "name": "水煮芦笋",
+      "note": ""
+    },
+    {
+      "id": 58,
+      "category": "素菜",
+      "name": "水煮生菜",
+      "note": ""
+    },
+    {
+      "id": 59,
+      "category": "素菜",
+      "name": "水煮油菜花",
+      "note": ""
+    },
+    {
+      "id": 60,
+      "category": "素菜",
+      "name": "水煮油麦菜",
+      "note": ""
+    },
+    {
+      "id": 61,
+      "category": "素菜",
+      "name": "水煮荷兰豆",
+      "note": ""
+    },
+    {
+      "id": 62,
+      "category": "素菜",
+      "name": "水煮蒿子秆",
+      "note": ""
+    },
+    {
+      "id": 63,
+      "category": "素菜",
+      "name": "水煮甜杆西蓝花",
+      "note": ""
+    },
+    {
+      "id": 64,
+      "category": "素菜",
+      "name": "煮黑鸡枞菌",
+      "note": ""
+    },
+    {
+      "id": 65,
+      "category": "素菜",
+      "name": "煮银耳",
+      "note": ""
+    },
+    {
+      "id": 66,
+      "category": "素菜",
+      "name": "煮鸭血",
+      "note": ""
+    },
+    {
+      "id": 67,
+      "category": "素菜",
+      "name": "酸菜金针菇鸭血",
+      "note": ""
+    },
+    {
+      "id": 68,
+      "category": "素菜",
+      "name": "酸辣土豆丝",
+      "note": ""
+    },
+    {
+      "id": 69,
+      "category": "素菜",
+      "name": "香菇青菜",
+      "note": ""
+    },
+    {
+      "id": 70,
+      "category": "素菜",
+      "name": "辣炒豆芽",
+      "note": ""
+    },
+    {
+      "id": 71,
+      "category": "素菜",
+      "name": "炒花菜",
+      "note": ""
+    },
+    {
+      "id": 72,
+      "category": "素菜",
+      "name": "炒四季豆",
+      "note": ""
+    },
+    {
+      "id": 73,
+      "category": "素菜",
+      "name": "炒杏鲍菇",
+      "note": ""
+    },
+    {
+      "id": 74,
+      "category": "主食",
+      "name": "蒸红薯",
+      "note": ""
+    },
+    {
+      "id": 75,
+      "category": "主食",
+      "name": "蒸紫薯",
+      "note": ""
+    },
+    {
+      "id": 76,
+      "category": "主食",
+      "name": "蒸玉米",
+      "note": ""
+    },
+    {
+      "id": 77,
+      "category": "主食",
+      "name": "杂粮饭",
+      "note": ""
+    },
+    {
+      "id": 78,
+      "category": "主食",
+      "name": "莜面鱼鱼",
+      "note": ""
+    },
+    {
+      "id": 1,
+      "category": "汤",
+      "name": "莲藕花生炖排骨汤",
+      "note": ""
+    },
+    {
+      "id": 2,
+      "category": "汤",
+      "name": "山药排骨汤",
+      "note": ""
+    },
+    {
+      "id": 3,
+      "category": "汤",
+      "name": "冬瓜排骨汤",
+      "note": ""
+    },
+    {
+      "id": 4,
+      "category": "汤",
+      "name": "萝卜排骨汤",
+      "note": ""
+    },
+    {
+      "id": 5,
+      "category": "汤",
+      "name": "荠菜肉碎汤",
+      "note": ""
+    },
+    {
+      "id": 6,
+      "category": "汤",
+      "name": "银耳肉碎汤",
+      "note": ""
+    },
+    {
+      "id": 7,
+      "category": "汤",
+      "name": "墨鱼肉饼汤",
+      "note": ""
+    },
+    {
+      "id": 8,
+      "category": "汤",
+      "name": "肉碎蒸蛋",
+      "note": ""
+    },
+    {
+      "id": 9,
+      "category": "汤",
+      "name": "紫菜肉丝汤",
+      "note": ""
+    },
+    {
+      "id": 10,
+      "category": "汤",
+      "name": "紫菜银鱼酸汤",
+      "note": ""
+    },
+    {
+      "id": 11,
+      "category": "汤",
+      "name": "榛蘑番茄酸汤",
+      "note": ""
+    },
+    {
+      "id": 12,
+      "category": "汤",
+      "name": "丝瓜干贝竹荪汤",
+      "note": ""
+    }
   ],
-  "火锅采购": [
-   {
-    "name": "牛奶鸭血",
-    "subtype": "—"
-   },
-   {
-    "name": "毛肚",
-    "subtype": "—"
-   },
-   {
-    "name": "梅林午餐肉",
-    "subtype": "—"
-   },
-   {
-    "name": "黄喉",
-    "subtype": "—"
-   },
-   {
-    "name": "海肠肉",
-    "subtype": "—"
-   },
-   {
-    "name": "腰花",
-    "subtype": "—"
-   },
-   {
-    "name": "鱿鱼花",
-    "subtype": "—"
-   },
-   {
-    "name": "鸭肠",
-    "subtype": "—"
-   },
-   {
-    "name": "豆制品",
-    "subtype": "—"
-   },
-   {
-    "name": "鱿鱼须",
-    "subtype": "—"
-   },
-   {
-    "name": "福州鱼丸",
-    "subtype": "—"
-   },
-   {
-    "name": "海底捞清汤火锅底料",
-    "subtype": "—"
-   },
-   {
-    "name": "小肠结",
-    "subtype": "—"
-   },
-   {
-    "name": "卤肥肠",
-    "subtype": "—"
-   },
-   {
-    "name": "小龙坎牛油锅底",
-    "subtype": "—"
-   },
-   {
-    "name": "小郡干",
-    "subtype": "—"
-   },
-   {
-    "name": "麻辣鸡胗",
-    "subtype": "—"
-   },
-   {
-    "name": "冻豆腐",
-    "subtype": "—"
-   },
-   {
-    "name": "撒尿牛肉丸",
-    "subtype": "—"
-   },
-   {
-    "name": "📋 独立小表（爱吃但限量）",
-    "subtype": ""
-   },
-   {
-    "name": "序号",
-    "subtype": "分类"
-   },
-   {
-    "name": "1",
-    "subtype": "bo"
-   },
-   {
-    "name": "2",
-    "subtype": "bo"
-   },
-   {
-    "name": "3",
-    "subtype": "bo"
-   },
-   {
-    "name": "4",
-    "subtype": "bo"
-   },
-   {
-    "name": "5",
-    "subtype": "bo"
-   },
-   {
-    "name": "6",
-    "subtype": "bo"
-   },
-   {
-    "name": "7",
-    "subtype": "bo"
-   },
-   {
-    "name": "8",
-    "subtype": "bo"
-   },
-   {
-    "name": "9",
-    "subtype": "bo"
-   },
-   {
-    "name": "10",
-    "subtype": "bo"
-   },
-   {
-    "name": "11",
-    "subtype": "bo"
-   },
-   {
-    "name": "12",
-    "subtype": "bo"
-   },
-   {
-    "name": "13",
-    "subtype": "bo"
-   },
-   {
-    "name": "14",
-    "subtype": "bo"
-   },
-   {
-    "name": "15",
-    "subtype": "bo"
-   },
-   {
-    "name": "16",
-    "subtype": "bo"
-   },
-   {
-    "name": "17",
-    "subtype": "bo"
-   },
-   {
-    "name": "18",
-    "subtype": "bo"
-   },
-   {
-    "name": "19",
-    "subtype": "bo"
-   },
-   {
-    "name": "po 爱吃",
-    "subtype": ""
-   },
-   {
-    "name": "序号",
-    "subtype": "分类"
-   },
-   {
-    "name": "13",
-    "subtype": "po"
-   },
-   {
-    "name": "14",
-    "subtype": "po"
-   },
-   {
-    "name": "15",
-    "subtype": "po"
-   },
-   {
-    "name": "16",
-    "subtype": "po"
-   },
-   {
-    "name": "17",
-    "subtype": "po"
-   },
-   {
-    "name": "18",
-    "subtype": "po"
-   },
-   {
-    "name": "19",
-    "subtype": "po"
-   },
-   {
-    "name": "20",
-    "subtype": "po"
-   },
-   {
-    "name": "21",
-    "subtype": "po"
-   },
-   {
-    "name": "22",
-    "subtype": "po"
-   },
-   {
-    "name": "23",
-    "subtype": "po"
-   },
-   {
-    "name": "24",
-    "subtype": "po"
-   },
-   {
-    "name": "主食类",
-    "subtype": ""
-   },
-   {
-    "name": "序号",
-    "subtype": "类型"
-   },
-   {
-    "name": "1",
-    "subtype": "牛肉面"
-   },
-   {
-    "name": "2",
-    "subtype": "方便面"
-   },
-   {
-    "name": "3",
-    "subtype": "粉"
-   },
-   {
-    "name": "4",
-    "subtype": "炒饭"
-   },
-   {
-    "name": "5",
-    "subtype": "团子"
-   },
-   {
-    "name": "6",
-    "subtype": "节令粿"
-   },
-   {
-    "name": "7",
-    "subtype": "节令粿"
-   },
-   {
-    "name": "8",
-    "subtype": "节令粿"
-   },
-   {
-    "name": "9",
-    "subtype": "水饺"
-   },
-   {
-    "name": "10",
-    "subtype": "汤包"
-   }
+  "lung_foods": [
+    {
+      "type": "梨汤",
+      "name": "秋月梨、蜜梨、皇冠梨"
+    },
+    {
+      "type": "梨汤",
+      "name": "马蹄梨汤"
+    },
+    {
+      "type": "甜汤",
+      "name": "银耳百合梨汤"
+    },
+    {
+      "type": "汤",
+      "name": "山药排骨 / 莲藕排骨"
+    },
+    {
+      "type": "水果",
+      "name": "佳宝佛手果"
+    },
+    {
+      "type": "药品",
+      "name": "鲜竹沥"
+    },
+    {
+      "type": "药品",
+      "name": "止咳糖浆"
+    },
+    {
+      "type": "药品",
+      "name": "999 感冒灵"
+    },
+    {
+      "type": "调理要点",
+      "name": "出血后可以做鸭血，煮或者酸菜金针菇鸭血补血"
+    },
+    {
+      "type": "其他",
+      "name": "凉拌银耳润肺"
+    }
   ],
-  "其他": []
- },
- "drinks_snacks": {
-  "po_drink": [
-   "巧克力牛奶",
-   "AD 钙奶",
-   "无糖可乐",
-   "蜂蜜柠檬水",
-   "绿豆水",
-   "开心果奶",
-   "香芋奶",
-   "无糖酸奶"
+  "diet_recipes": [
+    {
+      "id": 1,
+      "category": "肉",
+      "name": "炒鸡腿肉",
+      "note": ""
+    },
+    {
+      "id": 2,
+      "category": "肉",
+      "name": "炒牛肉片",
+      "note": ""
+    },
+    {
+      "id": 3,
+      "category": "肉",
+      "name": "煎牛肉饼",
+      "note": ""
+    },
+    {
+      "id": 4,
+      "category": "肉",
+      "name": "辣炒鸡翅根",
+      "note": ""
+    },
+    {
+      "id": 5,
+      "category": "肉",
+      "name": "卤鸡腿",
+      "note": ""
+    },
+    {
+      "id": 6,
+      "category": "肉",
+      "name": "芹菜炒牛肚",
+      "note": ""
+    },
+    {
+      "id": 7,
+      "category": "肉",
+      "name": "青椒肉丝",
+      "note": ""
+    },
+    {
+      "id": 8,
+      "category": "肉",
+      "name": "无糖可乐鸡翅",
+      "note": ""
+    },
+    {
+      "id": 9,
+      "category": "肉",
+      "name": "西红柿牛腩",
+      "note": ""
+    },
+    {
+      "id": 10,
+      "category": "肉",
+      "name": "洋葱炒牛肉薄片",
+      "note": ""
+    },
+    {
+      "id": 11,
+      "category": "肉",
+      "name": "葱香鸡排",
+      "note": ""
+    },
+    {
+      "id": 12,
+      "category": "肉",
+      "name": "水煮肥牛片",
+      "note": ""
+    },
+    {
+      "id": 13,
+      "category": "肉",
+      "name": "墨鱼蒸肉饼",
+      "note": ""
+    },
+    {
+      "id": 14,
+      "category": "肉",
+      "name": "银耳蒸肉饼",
+      "note": ""
+    },
+    {
+      "id": 15,
+      "category": "肉",
+      "name": "攸县香干炒肉",
+      "note": ""
+    },
+    {
+      "id": 16,
+      "category": "肉",
+      "name": "豆角鸡肉",
+      "note": ""
+    },
+    {
+      "id": 17,
+      "category": "肉",
+      "name": "青椒酿肉",
+      "note": ""
+    },
+    {
+      "id": 18,
+      "category": "肉",
+      "name": "豌豆肉沫",
+      "note": ""
+    },
+    {
+      "id": 19,
+      "category": "海鲜",
+      "name": "清蒸鲈鱼",
+      "note": ""
+    },
+    {
+      "id": 20,
+      "category": "海鲜",
+      "name": "蒸黄蚬子",
+      "note": ""
+    },
+    {
+      "id": 21,
+      "category": "海鲜",
+      "name": "蒜蓉粉丝生蚝",
+      "note": ""
+    },
+    {
+      "id": 22,
+      "category": "海鲜",
+      "name": "辣炒螺丝肉",
+      "note": ""
+    },
+    {
+      "id": 23,
+      "category": "海鲜",
+      "name": "辣炒花甲肉",
+      "note": ""
+    },
+    {
+      "id": 24,
+      "category": "海鲜",
+      "name": "清炒花蛤",
+      "note": ""
+    },
+    {
+      "id": 25,
+      "category": "海鲜",
+      "name": "蚝仔煎蛋",
+      "note": ""
+    },
+    {
+      "id": 26,
+      "category": "海鲜",
+      "name": "银鱼蒸蛋",
+      "note": ""
+    },
+    {
+      "id": 27,
+      "category": "海鲜",
+      "name": "水煮比目鱼",
+      "note": ""
+    },
+    {
+      "id": 28,
+      "category": "海鲜",
+      "name": "水煮鱿鱼花",
+      "note": ""
+    },
+    {
+      "id": 29,
+      "category": "海鲜",
+      "name": "水煮鱿鱼须",
+      "note": ""
+    },
+    {
+      "id": 30,
+      "category": "海鲜",
+      "name": "水煮半壳贻贝",
+      "note": ""
+    },
+    {
+      "id": 31,
+      "category": "海鲜",
+      "name": "水煮小扇贝",
+      "note": ""
+    },
+    {
+      "id": 32,
+      "category": "海鲜",
+      "name": "水煮海虹",
+      "note": ""
+    },
+    {
+      "id": 33,
+      "category": "海鲜",
+      "name": "水煮海螺片",
+      "note": ""
+    },
+    {
+      "id": 34,
+      "category": "素菜",
+      "name": "煎鸡蛋",
+      "note": ""
+    },
+    {
+      "id": 35,
+      "category": "素菜",
+      "name": "番茄鸡蛋",
+      "note": ""
+    },
+    {
+      "id": 36,
+      "category": "素菜",
+      "name": "酸辣鸭血",
+      "note": ""
+    },
+    {
+      "id": 37,
+      "category": "素菜",
+      "name": "煎豆腐",
+      "note": ""
+    },
+    {
+      "id": 38,
+      "category": "素菜",
+      "name": "咸蛋黄嫩豆腐",
+      "note": ""
+    },
+    {
+      "id": 39,
+      "category": "素菜",
+      "name": "白菜豆腐煲",
+      "note": ""
+    },
+    {
+      "id": 40,
+      "category": "素菜",
+      "name": "青椒茄子擂皮蛋",
+      "note": ""
+    },
+    {
+      "id": 41,
+      "category": "素菜",
+      "name": "炒空心菜梗",
+      "note": ""
+    },
+    {
+      "id": 42,
+      "category": "素菜",
+      "name": "炒口蘑",
+      "note": ""
+    },
+    {
+      "id": 43,
+      "category": "素菜",
+      "name": "炒平菇",
+      "note": ""
+    },
+    {
+      "id": 44,
+      "category": "素菜",
+      "name": "炒娃娃菜",
+      "note": ""
+    },
+    {
+      "id": 45,
+      "category": "素菜",
+      "name": "凉拌黄瓜",
+      "note": ""
+    },
+    {
+      "id": 46,
+      "category": "素菜",
+      "name": "凉拌苦瓜",
+      "note": ""
+    },
+    {
+      "id": 47,
+      "category": "素菜",
+      "name": "凉拌木耳",
+      "note": ""
+    },
+    {
+      "id": 48,
+      "category": "素菜",
+      "name": "凉拌茄子",
+      "note": ""
+    },
+    {
+      "id": 49,
+      "category": "素菜",
+      "name": "凉拌秋葵",
+      "note": ""
+    },
+    {
+      "id": 50,
+      "category": "素菜",
+      "name": "清炒丝瓜",
+      "note": ""
+    },
+    {
+      "id": 51,
+      "category": "素菜",
+      "name": "水煮红菜苔",
+      "note": "1-2 月"
+    },
+    {
+      "id": 52,
+      "category": "素菜",
+      "name": "水煮黄瓜花",
+      "note": "1-3 月"
+    },
+    {
+      "id": 53,
+      "category": "素菜",
+      "name": "水煮龙须菜",
+      "note": "2-3 月"
+    },
+    {
+      "id": 54,
+      "category": "素菜",
+      "name": "水煮苋菜",
+      "note": "5-7 月"
+    },
+    {
+      "id": 55,
+      "category": "素菜",
+      "name": "水煮空心菜",
+      "note": "6-7 月"
+    },
+    {
+      "id": 56,
+      "category": "素菜",
+      "name": "水煮红薯叶",
+      "note": ""
+    },
+    {
+      "id": 57,
+      "category": "素菜",
+      "name": "水煮芦笋",
+      "note": ""
+    },
+    {
+      "id": 58,
+      "category": "素菜",
+      "name": "水煮生菜",
+      "note": ""
+    },
+    {
+      "id": 59,
+      "category": "素菜",
+      "name": "水煮油菜花",
+      "note": ""
+    },
+    {
+      "id": 60,
+      "category": "素菜",
+      "name": "水煮油麦菜",
+      "note": ""
+    },
+    {
+      "id": 61,
+      "category": "素菜",
+      "name": "水煮荷兰豆",
+      "note": ""
+    },
+    {
+      "id": 62,
+      "category": "素菜",
+      "name": "水煮蒿子秆",
+      "note": ""
+    },
+    {
+      "id": 63,
+      "category": "素菜",
+      "name": "水煮甜杆西蓝花",
+      "note": ""
+    },
+    {
+      "id": 64,
+      "category": "素菜",
+      "name": "煮黑鸡枞菌",
+      "note": ""
+    },
+    {
+      "id": 65,
+      "category": "素菜",
+      "name": "煮银耳",
+      "note": ""
+    },
+    {
+      "id": 66,
+      "category": "素菜",
+      "name": "煮鸭血",
+      "note": ""
+    },
+    {
+      "id": 67,
+      "category": "素菜",
+      "name": "酸菜金针菇鸭血",
+      "note": ""
+    },
+    {
+      "id": 68,
+      "category": "素菜",
+      "name": "酸辣土豆丝",
+      "note": ""
+    },
+    {
+      "id": 69,
+      "category": "素菜",
+      "name": "香菇青菜",
+      "note": ""
+    },
+    {
+      "id": 70,
+      "category": "素菜",
+      "name": "辣炒豆芽",
+      "note": ""
+    },
+    {
+      "id": 71,
+      "category": "素菜",
+      "name": "炒花菜",
+      "note": ""
+    },
+    {
+      "id": 72,
+      "category": "素菜",
+      "name": "炒四季豆",
+      "note": ""
+    },
+    {
+      "id": 73,
+      "category": "素菜",
+      "name": "炒杏鲍菇",
+      "note": ""
+    },
+    {
+      "id": 74,
+      "category": "主食",
+      "name": "蒸红薯",
+      "note": ""
+    },
+    {
+      "id": 75,
+      "category": "主食",
+      "name": "蒸紫薯",
+      "note": ""
+    },
+    {
+      "id": 76,
+      "category": "主食",
+      "name": "蒸玉米",
+      "note": ""
+    },
+    {
+      "id": 77,
+      "category": "主食",
+      "name": "杂粮饭",
+      "note": ""
+    },
+    {
+      "id": 78,
+      "category": "主食",
+      "name": "莜面鱼鱼",
+      "note": ""
+    }
   ],
-  "bo_drink": [
-   "纯牛奶",
-   "椰子水",
-   "苏打水",
-   "红牛",
-   "绿豆水",
-   "冰杯",
-   "红豆薏米水",
-   "海河牛奶（哈密瓜/草莓/奶味）",
-   "宝矿力"
+  "xiaoxiang": [
+    {
+      "name": "酸菜图林根肠三明治",
+      "type": "三明治"
+    },
+    {
+      "name": "火腿金枪鱼色拉三明治",
+      "type": "三明治"
+    },
+    {
+      "name": "芥末籽爆汁肠仔面包",
+      "type": "面包"
+    },
+    {
+      "name": "北海道鲜牛乳三明治",
+      "type": "三明治"
+    },
+    {
+      "name": "牛肉鸡胸双拼可颂三明治",
+      "type": "三明治"
+    },
+    {
+      "name": "多谷物迷你汉堡双拼三明治",
+      "type": "三明治"
+    },
+    {
+      "name": "酸奶葡萄干夹子蛋糕",
+      "type": "蛋糕"
+    },
+    {
+      "name": "生菜玉米蔬菜沙拉",
+      "type": "沙拉"
+    },
+    {
+      "name": "蔬菜沙拉",
+      "type": "成品菜"
+    },
+    {
+      "name": "图 4：家庭火锅（采购清单）",
+      "type": "其他"
+    },
+    {
+      "name": "名称",
+      "type": "备注"
+    },
+    {
+      "name": "牛奶鸭血",
+      "type": "—"
+    },
+    {
+      "name": "毛肚",
+      "type": "—"
+    },
+    {
+      "name": "梅林午餐肉",
+      "type": "—"
+    },
+    {
+      "name": "黄喉",
+      "type": "—"
+    },
+    {
+      "name": "海肠肉",
+      "type": "—"
+    },
+    {
+      "name": "腰花",
+      "type": "—"
+    },
+    {
+      "name": "鱿鱼花",
+      "type": "—"
+    },
+    {
+      "name": "鸭肠",
+      "type": "—"
+    },
+    {
+      "name": "豆制品",
+      "type": "—"
+    },
+    {
+      "name": "鱿鱼须",
+      "type": "—"
+    },
+    {
+      "name": "福州鱼丸",
+      "type": "—"
+    },
+    {
+      "name": "海底捞清汤火锅底料",
+      "type": "—"
+    },
+    {
+      "name": "小肠结",
+      "type": "—"
+    },
+    {
+      "name": "卤肥肠",
+      "type": "—"
+    },
+    {
+      "name": "小龙坎牛油锅底",
+      "type": "—"
+    },
+    {
+      "name": "小郡干",
+      "type": "—"
+    },
+    {
+      "name": "麻辣鸡胗",
+      "type": "—"
+    },
+    {
+      "name": "冻豆腐",
+      "type": "—"
+    },
+    {
+      "name": "撒尿牛肉丸",
+      "type": "—"
+    },
+    {
+      "name": "📋 独立小表（爱吃但限量）",
+      "type": "其他"
+    },
+    {
+      "name": "序号",
+      "type": "分类"
+    },
+    {
+      "name": 1,
+      "type": "bo"
+    },
+    {
+      "name": 2,
+      "type": "bo"
+    },
+    {
+      "name": 3,
+      "type": "bo"
+    },
+    {
+      "name": 4,
+      "type": "bo"
+    },
+    {
+      "name": 5,
+      "type": "bo"
+    },
+    {
+      "name": 6,
+      "type": "bo"
+    },
+    {
+      "name": 7,
+      "type": "bo"
+    },
+    {
+      "name": 8,
+      "type": "bo"
+    },
+    {
+      "name": 9,
+      "type": "bo"
+    },
+    {
+      "name": 10,
+      "type": "bo"
+    },
+    {
+      "name": 11,
+      "type": "bo"
+    },
+    {
+      "name": 12,
+      "type": "bo"
+    },
+    {
+      "name": 13,
+      "type": "bo"
+    },
+    {
+      "name": 14,
+      "type": "bo"
+    },
+    {
+      "name": 15,
+      "type": "bo"
+    },
+    {
+      "name": 16,
+      "type": "bo"
+    },
+    {
+      "name": 17,
+      "type": "bo"
+    },
+    {
+      "name": 18,
+      "type": "bo"
+    },
+    {
+      "name": 19,
+      "type": "bo"
+    },
+    {
+      "name": "po 爱吃",
+      "type": "其他"
+    },
+    {
+      "name": "序号",
+      "type": "分类"
+    },
+    {
+      "name": 13,
+      "type": "po"
+    },
+    {
+      "name": 14,
+      "type": "po"
+    },
+    {
+      "name": 15,
+      "type": "po"
+    },
+    {
+      "name": 16,
+      "type": "po"
+    },
+    {
+      "name": 17,
+      "type": "po"
+    },
+    {
+      "name": 18,
+      "type": "po"
+    },
+    {
+      "name": 19,
+      "type": "po"
+    },
+    {
+      "name": 20,
+      "type": "po"
+    },
+    {
+      "name": 21,
+      "type": "po"
+    },
+    {
+      "name": 22,
+      "type": "po"
+    },
+    {
+      "name": 23,
+      "type": "po"
+    },
+    {
+      "name": 24,
+      "type": "po"
+    },
+    {
+      "name": "主食类",
+      "type": "其他"
+    },
+    {
+      "name": "序号",
+      "type": "类型"
+    },
+    {
+      "name": 1,
+      "type": "牛肉面"
+    },
+    {
+      "name": 2,
+      "type": "方便面"
+    },
+    {
+      "name": 3,
+      "type": "粉"
+    },
+    {
+      "name": 4,
+      "type": "炒饭"
+    },
+    {
+      "name": 5,
+      "type": "团子"
+    },
+    {
+      "name": 6,
+      "type": "节令粿"
+    },
+    {
+      "name": 7,
+      "type": "节令粿"
+    },
+    {
+      "name": 8,
+      "type": "节令粿"
+    },
+    {
+      "name": 9,
+      "type": "水饺"
+    },
+    {
+      "name": 10,
+      "type": "汤包"
+    }
   ],
-  "po_snack": [
-   "各类面包",
-   "山核桃猪皮晶",
-   "肉干（三只松鼠、猪肉铺）",
-   "烤鳗鱼",
-   "坚果",
-   "蛋糕（提拉米苏）",
-   "提子饼干",
-   "巧克力",
-   "火鸡面",
-   "方便面",
-   "泡芙",
-   "香芋奶",
-   "AD 钙",
-   "拌粉",
-   "炸酱面",
-   "酸辣粉",
-   "饸饹面"
+  "drinks": [
+    {
+      "owner": "po",
+      "name": "巧克力牛奶"
+    },
+    {
+      "owner": "po",
+      "name": "AD 钙奶"
+    },
+    {
+      "owner": "po",
+      "name": "无糖可乐"
+    },
+    {
+      "owner": "po",
+      "name": "蜂蜜柠檬水"
+    },
+    {
+      "owner": "po",
+      "name": "绿豆水"
+    },
+    {
+      "owner": "po",
+      "name": "开心果奶"
+    },
+    {
+      "owner": "po",
+      "name": "香芋奶"
+    },
+    {
+      "owner": "po",
+      "name": "无糖酸奶"
+    },
+    {
+      "owner": "bo",
+      "name": "纯牛奶"
+    },
+    {
+      "owner": "bo",
+      "name": "椰子水"
+    },
+    {
+      "owner": "bo",
+      "name": "苏打水"
+    },
+    {
+      "owner": "bo",
+      "name": "红牛"
+    },
+    {
+      "owner": "bo",
+      "name": "绿豆水"
+    },
+    {
+      "owner": "bo",
+      "name": "冰杯"
+    },
+    {
+      "owner": "bo",
+      "name": "红豆薏米水"
+    },
+    {
+      "owner": "bo",
+      "name": "海河牛奶（哈密瓜/草莓/奶味）"
+    },
+    {
+      "owner": "bo",
+      "name": "宝矿力"
+    },
+    {
+      "owner": "归属",
+      "name": "甜点/小吃"
+    },
+    {
+      "owner": "po",
+      "name": "各类面包"
+    },
+    {
+      "owner": "po",
+      "name": "山核桃猪皮晶"
+    },
+    {
+      "owner": "po",
+      "name": "肉干（三只松鼠、猪肉铺）"
+    },
+    {
+      "owner": "po",
+      "name": "烤鳗鱼"
+    },
+    {
+      "owner": "po",
+      "name": "坚果"
+    },
+    {
+      "owner": "po",
+      "name": "蛋糕（提拉米苏）"
+    },
+    {
+      "owner": "po",
+      "name": "提子饼干"
+    },
+    {
+      "owner": "po",
+      "name": "巧克力"
+    },
+    {
+      "owner": "po",
+      "name": "火鸡面"
+    },
+    {
+      "owner": "po",
+      "name": "方便面"
+    },
+    {
+      "owner": "po",
+      "name": "泡芙"
+    },
+    {
+      "owner": "po",
+      "name": "香芋奶"
+    },
+    {
+      "owner": "po",
+      "name": "AD 钙"
+    },
+    {
+      "owner": "po",
+      "name": "拌粉"
+    },
+    {
+      "owner": "po",
+      "name": "炸酱面"
+    },
+    {
+      "owner": "po",
+      "name": "酸辣粉"
+    },
+    {
+      "owner": "po",
+      "name": "饸饹面"
+    },
+    {
+      "owner": "bo",
+      "name": "米布丁"
+    },
+    {
+      "owner": "bo",
+      "name": "富硒煎蛋"
+    },
+    {
+      "owner": "bo",
+      "name": "卤味（溏心蛋）"
+    },
+    {
+      "owner": "bo",
+      "name": "茶叶蛋"
+    },
+    {
+      "owner": "bo",
+      "name": "卤干"
+    },
+    {
+      "owner": "bo",
+      "name": "青团"
+    },
+    {
+      "owner": "bo",
+      "name": "鲜核桃仁"
+    }
   ],
-  "bo_snack": [
-   "米布丁",
-   "富硒煎蛋",
-   "卤味（溏心蛋）",
-   "茶叶蛋",
-   "卤干",
-   "青团",
-   "鲜核桃仁"
+  "restaurants": [
+    {
+      "name": "一麻一辣",
+      "dishes": "腰花、肥肠、掌中宝、回锅肉"
+    },
+    {
+      "name": "喜家德水饺",
+      "dishes": "西芹鲜肉水饺"
+    },
+    {
+      "name": "有喜 胶东小馆",
+      "dishes": "海蛎煎蛋、沂蒙山炒鸡、贴饼子萝卜"
+    },
+    {
+      "name": "闵都海鲜",
+      "dishes": "极品味三鲜、白切猪耳、钉螺、盐焗蛏子"
+    },
+    {
+      "name": "蜀龙码头·水煮鱼",
+      "dishes": "水煮江团鱼、毛血旺"
+    },
+    {
+      "name": "三元梅园",
+      "dishes": "杏仁豆腐"
+    },
+    {
+      "name": "阿祥嫂",
+      "dishes": "招牌隆江猪脚饭、四点金、鲜椒酱"
+    },
+    {
+      "name": "万荣烤鸭",
+      "dishes": "烤鸭、红烧肘子、蟹黄豆腐"
+    },
+    {
+      "name": "盛百味",
+      "dishes": "火爆双脆、夫妻肺片、瑶柱蛋白炒饭、东坡豆腐"
+    },
+    {
+      "name": "外卖",
+      "dishes": ""
+    },
+    {
+      "name": "店名",
+      "dishes": "推荐菜"
+    },
+    {
+      "name": "东北小馆",
+      "dishes": "爆炒双花（鱿鱼花腰花）、干锅肥肠"
+    },
+    {
+      "name": "赣味小厨",
+      "dishes": "腐竹烧牛腩、上饶毛芋牛肉、炒粉"
+    },
+    {
+      "name": "霸王茶姬",
+      "dishes": "伯牙绝弦"
+    },
+    {
+      "name": "耕里柠檬茶",
+      "dishes": "椰椰柠檬茶"
+    },
+    {
+      "name": "沙皇俄式餐厅",
+      "dishes": "大串、俄式芝士可牛肉/鸡肉"
+    },
+    {
+      "name": "煲仔皇",
+      "dishes": "腊味三煲堡、香菇滑鸡煲"
+    },
+    {
+      "name": "袁记水饺",
+      "dishes": "白菜鲜肉饺、香菇马蹄饺"
+    },
+    {
+      "name": "便宜坊",
+      "dishes": "八珍狮子头"
+    },
+    {
+      "name": "济南把子肉",
+      "dishes": "尖椒肥肠、鹌鹑蛋红烧肉、虎皮卷煎、酸辣白菜"
+    },
+    {
+      "name": "甲乙饼",
+      "dishes": "招牌牛肉饼"
+    },
+    {
+      "name": "susu·越南火车头",
+      "dishes": "越南火车头"
+    },
+    {
+      "name": "丹江渔村",
+      "dishes": "柴火豆腐、毛血旺"
+    },
+    {
+      "name": "眉州东坡",
+      "dishes": "王家渡午餐肉炒饭、鸡丝凉面"
+    },
+    {
+      "name": "晋永信",
+      "dishes": "酸菜牛肉面"
+    },
+    {
+      "name": "北平楼",
+      "dishes": "鱼肚酸辣汤、爆三样、砂锅老豆腐、炸酱面"
+    },
+    {
+      "name": "赣味小馆",
+      "dishes": "炒粉、上饶毛芋牛肉、腐竹烧牛腩"
+    },
+    {
+      "name": "楚北热干面",
+      "dishes": "热干面、蛋酒、麻团"
+    },
+    {
+      "name": "晋三根刀削面",
+      "dishes": "牛肉面、酸汤水饺"
+    },
+    {
+      "name": "永和大王",
+      "dishes": "豆浆、油条、里脊肉卷"
+    },
+    {
+      "name": "火齐潮汕砂锅粥",
+      "dishes": "皮蛋瘦肉粥"
+    },
+    {
+      "name": "椒爱水煮鱼",
+      "dishes": "小份水煮鱼、口水鸡"
+    },
+    {
+      "name": "🆘 外卖-救急晚餐",
+      "dishes": ""
+    },
+    {
+      "name": "店名",
+      "dishes": "推荐菜"
+    },
+    {
+      "name": "丝路伊兰",
+      "dishes": "大盘鸡、干锅牛肚、牛肉串"
+    },
+    {
+      "name": "攸州小镇",
+      "dishes": "砂锅肥肠堡、攸县香干、青椒焖猪肚"
+    },
+    {
+      "name": "渝人码公鸡煲",
+      "dishes": "加量鸡煲、热辣肥肠煲"
+    },
+    {
+      "name": "Bowen 汉堡",
+      "dishes": "美式双层安格斯牛肉堡"
+    },
+    {
+      "name": "外卖-姨妈期",
+      "dishes": ""
+    },
+    {
+      "name": "店名",
+      "dishes": "推荐菜"
+    },
+    {
+      "name": "北平楼",
+      "dishes": "鱼肚酸辣汤"
+    },
+    {
+      "name": "金百万",
+      "dishes": "酸辣汤、石锅红烧肉"
+    },
+    {
+      "name": "大鸭梨",
+      "dishes": "酸辣汤、酸菜烧鸭血"
+    },
+    {
+      "name": "西部马华",
+      "dishes": "青椒牛肉丝盖饭、辣子鸡丁饭"
+    },
+    {
+      "name": "乡村基",
+      "dishes": "小炒肉、花菜"
+    },
+    {
+      "name": "老乡鸡",
+      "dishes": "卤肉饭、小炒肉"
+    },
+    {
+      "name": "好嫂子",
+      "dishes": "黄牛肉、鸡汤豆腐"
+    },
+    {
+      "name": "外出餐厅",
+      "dishes": ""
+    },
+    {
+      "name": "店名",
+      "dishes": "推荐菜"
+    },
+    {
+      "name": "北京宜宾招待所",
+      "dishes": "大刀白肉、炒腰花、回锅肉、燃面、冰粉"
+    },
+    {
+      "name": "森隆饭庄",
+      "dishes": "蟹粉狮子头、咸白碎菜炒饭、水晶肴肉、酸汤鳝鱼"
+    },
+    {
+      "name": "悠航",
+      "dishes": "老泰泰汉堡、鸡翅、邋遢周汉堡"
+    },
+    {
+      "name": "聚宝源",
+      "dishes": "手工刀鲜切牛肉、鲜卤双绝、门钉肉饼、爆肚"
+    },
+    {
+      "name": "戈拿旺巴西烤肉",
+      "dishes": "经典档、碳烤牛肉、三角肉"
+    },
+    {
+      "name": "泸州幺妹私房菜",
+      "dishes": "豆花肥肠、火爆脆花、鲜炒小星"
+    },
+    {
+      "name": "东江人家",
+      "dishes": "烧鹅、烧肉、大肠头、腌卤肠"
+    },
+    {
+      "name": "粤小馆",
+      "dishes": "卤肠捞饭、卤大肠头、碗豆腐、肠粉"
+    },
+    {
+      "name": "方砖厂69号炸酱面",
+      "dishes": "招牌炸酱面、爆肚粉"
+    },
+    {
+      "name": "那家小馆",
+      "dishes": "爆肚、毛血旺、花胶狮子头、那家红烧肉、炸酱面"
+    },
+    {
+      "name": "兰溪小馆",
+      "dishes": "老卤烧肉、葱油鸡、孜然小炒鸡"
+    },
+    {
+      "name": "水煮三国",
+      "dishes": "蜀国毛血旺、江湖水煮肉、云腿辣手豆腐、水煮鱼"
+    },
+    {
+      "name": "阳光餐厅",
+      "dishes": "血皮菜炒猪肝、洪湖藕汤、火爆腰花、回锅肉"
+    },
+    {
+      "name": "哈马尔罕",
+      "dishes": "番茄炒牛腩、酸辣面皮、烤包子"
+    },
+    {
+      "name": "砂锅居",
+      "dishes": "酸菜白肉砂锅、炖吊子"
+    },
+    {
+      "name": "北京南昌饭店",
+      "dishes": "河蚌黄豆、啤酒鸭、南昌炒粉"
+    },
+    {
+      "name": "渔歌·水煮鱼",
+      "dishes": "水煮鱼、爆炒腰花、乌鱼蛋汤"
+    },
+    {
+      "name": "探索新餐厅",
+      "dishes": ""
+    },
+    {
+      "name": "店名",
+      "dishes": "推荐菜"
+    }
   ]
- },
- "restaurants": [
-  {
-   "name": "麦穗腰花（半份）",
-   "price": 25.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "香卤肥肠（半份）",
-   "price": 29.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "掌中宝（半份）",
-   "price": 18.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "回锅肉片（半份）",
-   "price": 20.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "鸭血（半份）",
-   "price": 10.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "成都经典锅底（中辣）",
-   "price": 25.0,
-   "shop": "一麻一辣"
-  },
-  {
-   "name": "西芹鲜肉水饺 12只",
-   "price": 31.0,
-   "shop": "喜家德水饺"
-  },
-  {
-   "name": "海蛎子煎蛋",
-   "price": 53.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "沂蒙山炒鸡（尝鲜款）",
-   "price": 62.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "蛏子烧萝卜",
-   "price": 73.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "火箭烧老豆腐",
-   "price": 73.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "海肠捞饭（尝鲜款）",
-   "price": 39.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "贝丁捞饭",
-   "price": 28.0,
-   "shop": "有喜·胶东小馆"
-  },
-  {
-   "name": "美极脆三鲜",
-   "price": 68.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "白切猪肚",
-   "price": 68.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "钉螺辣炒",
-   "price": 48.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "盐焗蛏子",
-   "price": 58.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "炒套肠",
-   "price": 68.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "红烧猪尾",
-   "price": 68.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "炒小肠",
-   "price": 68.0,
-   "shop": "闵都海鲜"
-  },
-  {
-   "name": "水煮江团鱼（活鱼约2.8斤）",
-   "price": 185.0,
-   "shop": "蜀龙码头·水煮鱼"
-  },
-  {
-   "name": "精品毛血旺",
-   "price": 98.0,
-   "shop": "蜀龙码头·水煮鱼"
-  },
-  {
-   "name": "杏仁豆腐",
-   "price": 13.0,
-   "shop": "三元梅园（宫廷甜品·铭科苑店）"
-  },
-  {
-   "name": "招牌隆江猪脚饭（去骨蹄膀肉）",
-   "price": 33.8,
-   "shop": "阿祥嫂隆江猪脚饭（阳光北里店）"
-  },
-  {
-   "name": "隆江四点金饭",
-   "price": 52.8,
-   "shop": "阿祥嫂隆江猪脚饭（阳光北里店）"
-  },
-  {
-   "name": "鲜椒酱",
-   "price": 1.58,
-   "shop": "阿祥嫂隆江猪脚饭（阳光北里店）"
-  },
-  {
-   "name": "烤鸭半套（含葱丝瓜条一盒酱一份饼）",
-   "price": 98.0,
-   "shop": "万荣烤鸭·北京菜·家常菜"
-  },
-  {
-   "name": "红烧大肘子",
-   "price": 88.0,
-   "shop": "万荣烤鸭·北京菜·家常菜"
-  },
-  {
-   "name": "石板豆腐",
-   "price": 38.0,
-   "shop": "万荣烤鸭·北京菜·家常菜"
-  },
-  {
-   "name": "火爆双脆（鱼肚、肥肠）",
-   "price": 65.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "霸王水煮肉",
-   "price": 55.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "葱香鱼柳",
-   "price": 75.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "凉拌夫妻肺片",
-   "price": 50.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "烧椒拌牛肉",
-   "price": 52.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "瑶柱蛋白炒饭",
-   "price": 39.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "东坡豆腐",
-   "price": 43.0,
-   "shop": "盛百味·家宴餐厅（三合庄店）"
-  },
-  {
-   "name": "爆炒双花（腰花鱿鱼花）",
-   "price": 58.8,
-   "shop": "东北小馆（回龙观店）"
-  },
-  {
-   "name": "干锅肥肠",
-   "price": 59.9,
-   "shop": "东北小馆（回龙观店）"
-  },
-  {
-   "name": "东坡全肘",
-   "price": 71.9,
-   "shop": "东坡小馆·小锅炖炒·鲜卤熏酱（东北菜·肘子饭）"
-  },
-  {
-   "name": "水煮肉片（1000ml)",
-   "price": 35.8,
-   "shop": "东坡小馆·小锅炖炒·鲜卤熏酱（东北菜·肘子饭）"
-  },
-  {
-   "name": "腐竹烧牛腩",
-   "price": 78.0,
-   "shop": "赣味小厨·江西土家菜（安宁庄店）"
-  },
-  {
-   "name": "上饶毛芋牛肉",
-   "price": 48.0,
-   "shop": "赣味小厨·江西土家菜（安宁庄店）"
-  },
-  {
-   "name": "南昌炒粉",
-   "price": 31.7,
-   "shop": "赣味小厨·江西土家菜（安宁庄店）"
-  },
-  {
-   "name": "伯牙绝弦（茉莉雪芽）大杯",
-   "price": 22.0,
-   "shop": "霸王茶姬"
-  },
-  {
-   "name": "椰椰冰柠椰",
-   "price": 23.0,
-   "shop": "LINLEE林里·手打柠檬茶"
-  },
-  {
-   "name": "白葡萄冰柠茶（600ml）",
-   "price": 23.0,
-   "shop": "LINLEE林里·手打柠檬茶"
-  },
-  {
-   "name": "俄式莎士雷可鸡肉大串",
-   "price": 35.1,
-   "shop": "沙皇俄式餐厅（龙域店）"
-  },
-  {
-   "name": "俄式莎士雷可牛肉大串",
-   "price": 57.9,
-   "shop": "沙皇俄式餐厅（龙域店）"
-  },
-  {
-   "name": "腊味三珍煲仔饭",
-   "price": 38.9,
-   "shop": "煲仔皇煲仔饭"
-  },
-  {
-   "name": "香菇滑鸡煲",
-   "price": 29.9,
-   "shop": "煲仔皇煲仔饭"
-  },
-  {
-   "name": "（生鲜）白菜鲜肉饺 15个",
-   "price": 31.98,
-   "shop": "袁记水饺"
-  },
-  {
-   "name": "（生鲜）冬菇马蹄鲜肉饺 15个",
-   "price": 31.98,
-   "shop": "袁记水饺"
-  },
-  {
-   "name": "八珍狮子头",
-   "price": 138.0,
-   "shop": "便宜坊"
-  },
-  {
-   "name": "（精品）把子肉1块",
-   "price": 17.9,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "尖椒肥肠（小份菜）",
-   "price": 24.9,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "鹌鹑蛋红烧肉（小份菜）",
-   "price": 22.6,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "虎皮卷煎1个",
-   "price": 5.8,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "临沂铁锅炒鸡（小份菜）",
-   "price": 17.9,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "爽口手撕包菜",
-   "price": 7.9,
-   "shop": "济南把子肉"
-  },
-  {
-   "name": "镇店牛肉饼",
-   "price": 20.5,
-   "shop": "甲乙饼·现熬粥"
-  },
-  {
-   "name": "越南牛肉河粉火车头",
-   "price": 64.9,
-   "shop": "susu·越南火车头"
-  },
-  {
-   "name": "浓煨柴火豆腐",
-   "price": 39.0,
-   "shop": "丹江渔村（龙旗店）"
-  },
-  {
-   "name": "渔家毛血旺（半份）",
-   "price": 66.0,
-   "shop": "丹江渔村（龙旗店）"
-  },
-  {
-   "name": "王家渡午餐肉炒饭",
-   "price": 25.0,
-   "shop": "眉州东坡（回龙观店）"
-  },
-  {
-   "name": "酸菜牛肉面",
-   "price": 32.88,
-   "shop": "晋永信刀削面饺子坊"
-  },
-  {
-   "name": "肉臊子油泼面",
-   "price": 29.88,
-   "shop": "晋永信刀削面饺子坊"
-  },
-  {
-   "name": "卤鸡腿",
-   "price": 10.8,
-   "shop": "晋永信刀削面饺子坊"
-  }
- ],
- "fruits": [
-  {
-   "name": "芒果",
-   "season": "全年"
-  },
-  {
-   "name": "圣女果",
-   "season": "全年"
-  },
-  {
-   "name": "车厘子",
-   "season": "1-3 月"
-  },
-  {
-   "name": "桑葚",
-   "season": "3-4 月"
-  },
-  {
-   "name": "杨梅",
-   "season": "5-6 月"
-  },
-  {
-   "name": "夏黑葡萄",
-   "season": "5-6 月"
-  },
-  {
-   "name": "莲子",
-   "season": "5-6 月"
-  },
-  {
-   "name": "桃",
-   "season": "5-7 月"
-  },
-  {
-   "name": "西瓜",
-   "season": "5-8 月"
-  },
-  {
-   "name": "菠萝",
-   "season": "6-8 月"
-  },
-  {
-   "name": "蓝莓",
-   "season": "7-9 月"
-  },
-  {
-   "name": "巨峰葡萄",
-   "season": "8-9 月"
-  },
-  {
-   "name": "阳光玫瑰",
-   "season": "9-11 月"
-  },
-  {
-   "name": "石榴",
-   "season": "9-11 月"
-  },
-  {
-   "name": "柚子",
-   "season": "9-11 月"
-  },
-  {
-   "name": "春见耙耙柑",
-   "season": "11-1 月"
-  },
-  {
-   "name": "冰柿",
-   "season": "11-1 月"
-  }
- ],
- "health": [
-  {
-   "category": "肺部调理",
-   "item": "梨汤",
-   "detail": "秋月梨、蜜梨、皇冠梨",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "梨汤",
-   "detail": "马蹄梨汤",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "甜汤",
-   "detail": "银耳百合梨汤",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "汤",
-   "detail": "山药排骨 / 莲藕排骨",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "水果",
-   "detail": "佳宝佛手果",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "药品",
-   "detail": "鲜竹沥",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "药品",
-   "detail": "止咳糖浆",
-   "note": ""
-  },
-  {
-   "category": "肺部调理",
-   "item": "药品",
-   "detail": "999 感冒灵",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "外卖-姨妈期",
-   "detail": "",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "店名",
-   "detail": "推荐菜",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "北平楼",
-   "detail": "鱼肚酸辣汤",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "金百万",
-   "detail": "酸辣汤、石锅红烧肉",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "大鸭梨",
-   "detail": "酸辣汤、酸菜烧鸭血",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "西部马华",
-   "detail": "青椒牛肉丝盖饭、辣子鸡丁饭",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "乡村基",
-   "detail": "小炒肉、花菜",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "老乡鸡",
-   "detail": "卤肉饭、小炒肉",
-   "note": ""
-  },
-  {
-   "category": "减脂期",
-   "item": "好嫂子",
-   "detail": "黄牛肉、鸡汤豆腐",
-   "note": ""
-  }
- ]
 }

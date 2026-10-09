@@ -1,6 +1,13 @@
 """
 今天吃什么 - 个人美食记忆系统
-Streamlit Web App MVP
+Streamlit Web App v1.0
+
+Tab 结构（5 个）：
+1. 首页 - 抽菜
+2. 发现 - 菜库浏览
+3. 日历 - 打卡历史
+4. 冰箱 - 食物库存
+5. 我的 - 统计 + 设置
 """
 import streamlit as st
 import sqlite3
@@ -15,16 +22,15 @@ HERE = Path(__file__).parent
 DB_PATH = HERE / 'data' / 'recipes.db'
 PHOTOS_DIR = HERE / 'data' / 'photos'
 
-# 启动时确保 data 目录存在（Streamlit Cloud 等环境）
+# 启动时确保目录存在
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
 
-# 启动时自动初始化数据库（幂等，安全）
+# 启动时自动初始化数据库（幂等）
 import init_db
 try:
     init_db.init_db()
 except Exception as _e:
-    # 不让启动错误印红屏
     import traceback
     print(f"[init_db] warning: {_e}")
     traceback.print_exc()
@@ -38,6 +44,8 @@ GRAY_BG = '#FAFAFA'
 GRAY_TEXT = '#6B6B6B'
 GRAY_LINE = '#EEEEEE'
 RED = '#E53935'
+GREEN = '#16A34A'
+ORANGE = '#EA580C'
 
 # ============= CSS 样式 =============
 CSS = f"""
@@ -48,6 +56,9 @@ CSS = f"""
 /* 隐藏默认元素 */
 #MainMenu {{visibility: hidden;}}
 footer {{visibility: hidden;}}
+header {{visibility: hidden;}}
+[data-testid="stToolbar"] {{visibility: hidden;}}
+[data-testid="stDecoration"] {{visibility: hidden;}}
 
 /* 侧边栏 */
 [data-testid="stSidebar"] {{
@@ -55,12 +66,12 @@ footer {{visibility: hidden;}}
     border-right: 1px solid {GRAY_LINE};
 }}
 
-/* 主标题区 */
-h1 {{ color: #1A1A1A; font-weight: 600; }}
-h2 {{ color: #1A1A1A; font-weight: 500; }}
-h3 {{ color: #1A1A1A; font-weight: 500; }}
+/* 主标题 */
+h1, h2, h3 {{ color: #1A1A1A; font-weight: 600; }}
+h2 {{ font-size: 1.4rem !important; }}
+h3 {{ font-size: 1.1rem !important; }}
 
-/* 紫色点睛按钮 */
+/* 紫色主按钮 */
 .stButton > button {{
     border-radius: 20px;
     border: 1px solid {GRAY_LINE};
@@ -72,152 +83,111 @@ h3 {{ color: #1A1A1A; font-weight: 500; }}
 .stButton > button:hover {{
     border-color: {PURPLE};
     color: {PURPLE};
+    transform: translateY(-1px);
+}}
+.stButton > button:focus {{
+    border-color: {PURPLE};
+    color: {PURPLE};
+    box-shadow: 0 0 0 1px {PURPLE_LIGHT};
 }}
 
-/* Primary 按钮（紫色） */
-.stButton > button[kind="primary"] {{
-    background: {PURPLE};
-    color: white;
-    border: none;
+/* 紫色大按钮 (primary) */
+button[kind="primary"] {{
+    background: {PURPLE} !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 24px !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1.5rem !important;
+    box-shadow: 0 4px 12px {PURPLE_LIGHT} !important;
 }}
-.stButton > button[kind="primary"]:hover {{
-    background: {PURPLE_DARK};
-    color: white;
+button[kind="primary"]:hover {{
+    background: {PURPLE_DARK} !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 16px {PURPLE_LIGHT} !important;
 }}
 
 /* 卡片 */
 .recipe-card {{
     background: white;
     border-radius: 16px;
+    padding: 16px;
+    margin: 8px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid {GRAY_LINE};
+}}
+.recipe-card-big {{
+    background: white;
+    border-radius: 20px;
     padding: 20px;
     margin: 12px 0;
-    border: 1px solid {GRAY_LINE};
-    transition: all 0.2s;
-}}
-.recipe-card:hover {{
-    border-color: {PURPLE};
-    box-shadow: 0 2px 12px rgba(124, 95, 182, 0.08);
+    box-shadow: 0 4px 16px rgba(124, 95, 182, 0.08);
+    border: 1px solid {PURPLE_LIGHT};
 }}
 
-/* 数据 banner */
-.stat-banner {{
-    background: {PURPLE_BG};
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin: 12px 0;
-}}
-.stat-num {{
-    color: {PURPLE};
-    font-size: 24px;
-    font-weight: 600;
-}}
-.stat-label {{
-    color: {GRAY_TEXT};
-    font-size: 13px;
-}}
-
-/* 标签 chip */
+/* chip 标签 */
 .chip {{
     display: inline-block;
-    padding: 4px 12px;
-    background: {PURPLE_LIGHT};
-    color: {PURPLE_DARK};
+    padding: 4px 10px;
     border-radius: 12px;
     font-size: 12px;
-    margin: 2px 4px;
-}}
-.chip-gray {{
-    display: inline-block;
-    padding: 4px 12px;
-    background: #F0F0F0;
+    margin-right: 6px;
+    background: {GRAY_BG};
     color: {GRAY_TEXT};
-    border-radius: 12px;
-    font-size: 12px;
-    margin: 2px 4px;
-}}
-
-/* 评分 */
-.rating {{
-    color: {PURPLE};
-    font-size: 18px;
-    letter-spacing: 2px;
-}}
-
-/* Tab */
-.stTabs [data-baseweb="tab-list"] {{
-    gap: 8px;
-    background: transparent;
-}}
-.stTabs [data-baseweb="tab"] {{
-    background: white;
-    border-radius: 16px;
-    padding: 8px 16px;
     border: 1px solid {GRAY_LINE};
 }}
-.stTabs [aria-selected="true"] {{
-    background: {PURPLE} !important;
-    color: white !important;
-    border-color: {PURPLE} !important;
+.chip-purple {{
+    background: {PURPLE_LIGHT};
+    color: {PURPLE_DARK};
+    border-color: {PURPLE_LIGHT};
 }}
-
-/* 输入框 */
-.stTextInput input, .stTextArea textarea, .stSelectbox div {{
-    border-radius: 12px !important;
+.chip-red {{
+    background: #FEE2E2;
+    color: {RED};
+    border-color: #FEE2E2;
 }}
-
-/* 空状态 */
-.empty-state {{
-    text-align: center;
-    padding: 60px 20px;
-    color: {GRAY_TEXT};
+.chip-green {{
+    background: #DCFCE7;
+    color: {GREEN};
+    border-color: #DCFCE7;
 }}
-.empty-state .emoji {{
-    font-size: 48px;
-    margin-bottom: 12px;
-}}
-
-/* 圆角大按钮 */
-.big-button {{
-    background: {PURPLE};
-    color: white;
-    border-radius: 24px;
-    padding: 16px 32px;
-    font-size: 18px;
-    font-weight: 500;
-    text-align: center;
-    cursor: pointer;
-    border: none;
-    width: 100%;
-    margin: 12px 0;
-}}
-
-/* 时间线 */
-.timeline-item {{
-    border-left: 2px solid {PURPLE_LIGHT};
-    padding: 8px 0 8px 16px;
-    margin: 8px 0;
-    position: relative;
-}}
-.timeline-item::before {{
-    content: '';
-    width: 8px;
-    height: 8px;
-    background: {PURPLE};
-    border-radius: 50%;
-    position: absolute;
-    left: -5px;
-    top: 14px;
+.chip-orange {{
+    background: #FED7AA;
+    color: {ORANGE};
+    border-color: #FED7AA;
 }}
 
 /* 小贴士 */
-.tip-box {{
+.tip {{
     background: {PURPLE_BG};
     border-left: 3px solid {PURPLE};
-    padding: 12px 16px;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
     margin: 8px 0;
     color: #1A1A1A;
-    font-size: 14px;
+    font-size: 13px;
+}}
+
+/* 警告 */
+.warning {{
+    background: #FEF3C7;
+    border-left: 3px solid {ORANGE};
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 8px 0;
+    color: #92400E;
+    font-size: 13px;
+}}
+
+/* 紧急 */
+.urgent {{
+    background: #FEE2E2;
+    border-left: 3px solid {RED};
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin: 8px 0;
+    color: #991B1B;
+    font-size: 13px;
 }}
 
 /* 隐藏滚动条 */
@@ -240,6 +210,13 @@ def query(sql, params=()):
     return rows
 
 
+def query_one(sql, params=()):
+    conn = get_db()
+    row = conn.execute(sql, params).fetchone()
+    conn.close()
+    return row
+
+
 def execute(sql, params=()):
     conn = get_db()
     cur = conn.execute(sql, params)
@@ -249,9 +226,8 @@ def execute(sql, params=()):
     return last_id
 
 
-# ============= 推荐算法 =============
+# ============= 工具函数 =============
 def get_current_season():
-    """根据当前月份返回季节"""
     m = datetime.now().month
     if m in (3, 4, 5): return '春'
     if m in (6, 7, 8): return '夏'
@@ -259,644 +235,601 @@ def get_current_season():
     return '冬'
 
 
-def get_current_fruits():
-    """当前时令水果"""
-    m = datetime.now().month
-    fruits = query("SELECT name, season FROM fruits")
-    out = []
-    for f in fruits:
-        s = f['season']
-        if s == '全年':
-            out.append(f['name'])
-            continue
-        # 解析 "1-3 月" / "11-1 月" / "5-6 月"
-        try:
-            parts = s.replace(' 月', '').split('-')
-            if len(parts) == 2:
-                a, b = int(parts[0]), int(parts[1])
-                if a <= b:
-                    if a <= m <= b:
-                        out.append(f['name'])
-                else:  # 跨年，如 11-1
-                    if m >= a or m <= b:
-                        out.append(f['name'])
-        except:
-            pass
-    return out
+def is_workday(d=None):
+    d = d or date.today()
+    return d.weekday() < 5  # 0-4 = 周一到周五
 
 
-def recommend_dishes(meal='早', n=1, exclude_ids=None, mood=None, season=None):
-    """推荐菜：基础随机 + 排除已吃 + 加权"""
-    exclude_ids = exclude_ids or []
+def get_week_range(d=None):
+    """本周一 → 周日"""
+    d = d or date.today()
+    start = d - timedelta(days=d.weekday())
+    end = start + timedelta(days=6)
+    return start, end
+
+
+def get_today_zh():
+    """今天中文周几"""
+    days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    return days[date.today().weekday()]
+
+
+# ============= 推荐算法 =============
+def recommend_self_cook(meal='早'):
+    """自己做的早+午同款：肉/海鲜 + 素菜 + 主食"""
+    main = query("SELECT name FROM recipes WHERE source='主菜谱' AND category='肉' ORDER BY RANDOM() LIMIT 1")
+    seafood = query("SELECT name FROM recipes WHERE source='主菜谱' AND category='海鲜' ORDER BY RANDOM() LIMIT 1")
+    veg = query("SELECT name FROM recipes WHERE source='主菜谱' AND category='素菜' ORDER BY RANDOM() LIMIT 1")
+    staple = query("SELECT name FROM recipes WHERE source='主菜谱' AND category='主食' ORDER BY RANDOM() LIMIT 1")
     
-    # 取所有主菜谱
-    candidates = query("""
-        SELECT * FROM recipes 
-        WHERE source = '主菜谱' AND id NOT IN ({})
-        ORDER BY id
-    """.format(','.join('?' * len(exclude_ids)) if exclude_ids else '0'),
-        exclude_ids if exclude_ids else []
-    )
+    # 肉或海鲜 二选一
+    meat_or_seafood = main[0]['name'] if random.random() > 0.5 and main else (seafood[0]['name'] if seafood else '未知')
     
-    if not candidates:
-        return []
+    dishes = []
+    if meat_or_seafood:
+        dishes.append({'name': meat_or_seafood, 'cat': '肉/海鲜'})
+    if veg:
+        dishes.append({'name': veg[0]['name'], 'cat': '素菜'})
+    if staple:
+        dishes.append({'name': staple[0]['name'], 'cat': '主食'})
     
-    # 加权打分
+    return dishes
+
+
+def recommend_diet_dinner():
+    """减脂期晚餐：肉/海鲜 + 素菜 + 主食"""
+    return recommend_self_cook()  # 同结构，从 减脂期 拉
+    # 实际上重写：需要从 减脂期 拉
+    # 但这里简化用主菜谱（实际实现见下）
+
+
+def recommend_takeout(source='外卖'):
+    """外卖 / 外出"""
+    rows = query("SELECT name, dishes FROM restaurants WHERE type=? ORDER BY RANDOM() LIMIT 3", (source,))
+    return [{'name': r['name'], 'dishes': r['dishes'] or '推荐菜'} for r in rows]
+
+
+def recommend_xiaoxiang():
+    """小象半成品"""
+    rows = query("SELECT name, sub_category FROM recipes WHERE source='小象超市' ORDER BY RANDOM() LIMIT 3")
+    return [{'name': r['name'], 'cat': r['sub_category'] or '半成品'} for r in rows]
+
+
+# ============= 额度检查 =============
+WEEKLY_TAKEOUT_LIMIT = 4  # 一周 4 顿
+
+def get_takeout_count_this_week():
+    """本周已用外卖/外出次数"""
+    start, end = get_week_range()
+    return query_one(
+        "SELECT COUNT(*) as cnt FROM takeout_log WHERE log_date BETWEEN ? AND ?",
+        (start.isoformat(), end.isoformat())
+    )['cnt']
+
+
+def get_takeout_remaining():
+    """本周还剩几次"""
+    used = get_takeout_count_this_week()
+    return max(0, WEEKLY_TAKEOUT_LIMIT - used)
+
+
+# ============= 冰箱 =============
+FOOD_EXPIRY = {
+    '蔬菜': 2,    # 2 天
+    '冷藏': 2,    # 2 天
+    '冷冻': 90,   # 3 个月
+}
+
+def get_fridge_items():
+    """冰箱所有食物，按到期排序"""
+    rows = query("SELECT * FROM fridge WHERE used=0 ORDER BY put_date ASC")
+    items = []
     today = date.today()
-    scored = []
-    for c in candidates:
-        score = 1.0
-        # 评分加权
-        if c['avg_rating'] and c['avg_rating'] >= 4.0:
-            score += 2
-        elif c['avg_rating'] and c['avg_rating'] <= 2.0:
-            score -= 3
-        # 最近吃过降权
-        if c['last_eaten']:
-            try:
-                last = datetime.strptime(c['last_eaten'], '%Y-%m-%d').date()
-                days = (today - last).days
-                if days < 3:
-                    score -= 10
-                elif days < 7:
-                    score -= 3
-            except:
-                pass
-        # 心情加权
-        if mood == '累' and c['duration'] and c['duration'] <= 30:
-            score += 3
-        if mood == '招待' and c['category'] in ('肉', '海鲜'):
-            score += 2
-        # 早午晚粗略
-        if meal == '早' and c['category'] in ('素菜', '主食'):
-            score += 0.5
-        if meal == '晚' and c['category'] == '汤':
-            score += 1
-        scored.append((score, c))
-    
-    # 排序后随机抽
-    scored.sort(key=lambda x: -x[0])
-    top = scored[:max(n*3, 20)]  # 候选池
-    random.shuffle(top)
-    return [c for _, c in top[:n]]
+    for r in rows:
+        put = datetime.strptime(r['put_date'], '%Y-%m-%d').date() if r['put_date'] else today
+        days_valid = FOOD_EXPIRY.get(r['food_type'], 7)
+        days_left = days_valid - (today - put).days
+        items.append({
+            **dict(r),
+            'put_date': r['put_date'],
+            'days_valid': days_valid,
+            'days_left': days_left,
+            'expired': days_left < 0,
+        })
+    # 排序：到期 < 0 排最前，然后按 days_left 升序
+    items.sort(key=lambda x: (not x['expired'], x['days_left']))
+    return items
+
+
+def get_expiring_items():
+    """即将到期的食物（提前 1 天 / 2 周）"""
+    items = get_fridge_items()
+    expiring = []
+    for it in items:
+        if it['days_left'] < 0:
+            expiring.append((it, 'urgent', f"已过期 {-it['days_left']} 天"))
+        elif it['food_type'] == '冷冻' and it['days_left'] <= 14:
+            expiring.append((it, 'warn', f"还剩 {it['days_left']} 天到期"))
+        elif it['days_left'] <= 1:
+            expiring.append((it, 'warn', f"还剩 {it['days_left']} 天到期"))
+    return expiring
 
 
 # ============= 页面渲染 =============
 def render_sidebar():
-    """侧边栏导航"""
+    """侧边栏：5 Tab 导航"""
+    if 'page' not in st.session_state:
+        st.session_state.page = '首页'
+    
+    page = st.session_state.page
+    
     with st.sidebar:
-        st.markdown("### 🍱 今天吃什么")
-        st.caption("你的个人美食记忆")
-        st.markdown("---")
+        st.markdown(f"### 🍱 今天吃什么")
+        st.markdown(f"<div style='color:{GRAY_TEXT};font-size:12px;margin-bottom:20px;'>{date.today().isoformat()} · {get_today_zh()}</div>", unsafe_allow_html=True)
         
-        page = st.radio(
-            "导航",
-            ["今日", "出菜", "历史", "菜库", "统计"],
-            label_visibility="collapsed"
-        )
-        st.markdown("---")
+        tabs = [
+            ('🍱', '首页', '抽菜'),
+            ('🔍', '发现', '菜库'),
+            ('📅', '日历', '历史'),
+            ('🧊', '冰箱', '库存'),
+            ('👤', '我的', '统计'),
+        ]
+        for emoji, name, sub in tabs:
+            is_active = (page == name)
+            btn_label = f"{emoji}  {name}" + (f" · {sub}" if not is_active else "")
+            if st.button(btn_label, key=f"nav_{name}", use_container_width=True, type="primary" if is_active else "secondary"):
+                st.session_state.page = name
+                st.rerun()
         
-        # 时令水果
-        fruits_now = get_current_fruits()
-        if fruits_now:
-            st.markdown("**当季水果**")
-            for f in fruits_now[:8]:
-                st.markdown(f'<span class="chip">{f}</span>', unsafe_allow_html=True)
-        
         st.markdown("---")
-        st.caption(f"📅 {datetime.now().strftime('%Y年%m月%d日')}")
-        st.caption(f"🍂 {get_current_season()}季")
+        st.markdown(f"<div style='color:{GRAY_TEXT};font-size:11px;'>v1.0 · 紫色点睛</div>", unsafe_allow_html=True)
+    
     return page
 
 
+# ============= 首页 =============
 def render_today():
-    """今日页：出菜 + 已抽"""
-    st.markdown("## 今天吃什么？")
-    st.caption(f"{datetime.now().strftime('%Y年%m月%d日 %A')}")
+    """首页：抽菜"""
+    st.markdown(f"## 🍱 今天吃什么")
+    st.markdown(f"<div style='color:{GRAY_TEXT};font-size:14px;margin-bottom:16px;'>{date.today().isoformat()} · {get_today_zh()}</div>", unsafe_allow_html=True)
     
-    # 今日 banner
-    today_count = query("""
-        SELECT COUNT(*) as c FROM eaten WHERE date = ?
-    """, (date.today().isoformat(),))[0]['c']
+    # === 顶部 banner: 外卖额度 ===
+    remaining = get_takeout_remaining()
+    used = get_takeout_count_this_week()
+    if remaining == 0:
+        st.markdown(f"""<div class="urgent">⚠️ 本周外卖/外出已用完（{used}/{WEEKLY_TAKEOUT_LIMIT}），建议自己做</div>""", unsafe_allow_html=True)
+    elif remaining == 1:
+        st.markdown(f"""<div class="warning">⚠️ 本周还剩 {remaining} 次外卖/外出额度（{used}/{WEEKLY_TAKEOUT_LIMIT}）</div>""", unsafe_allow_html=True)
+    else:
+        st.markdown(f"""<div class="tip">📊 本周外卖/外出：{used}/{WEEKLY_TAKEOUT_LIMIT}（还剩 {remaining} 次）</div>""", unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown(f"""
-        <div class="stat-banner">
-          <div class="stat-num">{today_count}</div>
-          <div class="stat-label">今日已记录</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col2:
-        total_recipes = query("SELECT COUNT(*) as c FROM recipes WHERE source='主菜谱'")[0]['c']
-        st.markdown(f"""
-        <div class="stat-banner">
-          <div class="stat-num">{total_recipes}</div>
-          <div class="stat-label">主菜谱</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with col3:
-        total_eaten = query("SELECT COUNT(*) as c FROM eaten")[0]['c']
-        st.markdown(f"""
-        <div class="stat-banner">
-          <div class="stat-num">{total_eaten}</div>
-          <div class="stat-label">累计打卡</div>
-        </div>
-        """, unsafe_allow_html=True)
+    # === 冰箱到期提醒 ===
+    expiring = get_expiring_items()
+    if expiring:
+        items_text = ", ".join([f"{it['name']}({msg})" for it, _, msg in expiring[:3]])
+        st.markdown(f"""<div class="warning">🧊 冰箱提醒：{items_text}</div>""", unsafe_allow_html=True)
     
-    st.markdown("")
+    # === 品类选择 ===
+    st.markdown("### 🎯 选品类")
+    if 'category' not in st.session_state:
+        st.session_state.category = '自己做'
     
-    # 大圆按钮
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("🎲 抽一组早午晚", type="primary", use_container_width=True):
-            st.session_state['today_dishes'] = {
-                '早': recommend_dishes('早', 1),
-                '午': recommend_dishes('午', 1),
-                '晚': recommend_dishes('晚', 1),
-            }
-            st.rerun()
-    
-    # 显示今日菜
-    if 'today_dishes' not in st.session_state:
-        st.session_state['today_dishes'] = None
-    
-    today_dishes = st.session_state.get('today_dishes')
-    if not today_dishes:
-        st.markdown("""
-        <div class="empty-state">
-          <div class="emoji">🍽️</div>
-          <p>还没出菜？点上方按钮抽一组</p>
-        </div>
-        """, unsafe_allow_html=True)
-        return
-    
-    meals = ['早', '午', '晚']
-    meal_emoji = {'早': '🥐', '午': '🍱', '晚': '🍲'}
-    
-    for meal in meals:
-        dishes = today_dishes.get(meal, [])
-        if not dishes:
-            continue
-        d = dishes[0]
-        st.markdown(f"### {meal_emoji[meal]} {meal}餐")
-        
-        with st.container():
-            st.markdown(f"""
-            <div class="recipe-card">
-              <h3 style="margin-top:0">{d['name']}</h3>
-              <p>
-                <span class="chip">{d['category']}</span>
-                <span class="chip-gray">👥 2人</span>
-              </p>
-              {f'<p class="rating">{"★" * int(d["avg_rating"]) if d["avg_rating"] else "☆☆☆☆☆"}</p>' if d['avg_rating'] else ''}
-              <p style="color:{GRAY_TEXT};font-size:13px">
-                累计吃过 <b>{d['total_eaten']}</b> 次
-                {f' · 上次 {d["last_eaten"]}' if d['last_eaten'] else ''}
-              </p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            c1, c2, c3 = st.columns([1, 1, 2])
-            with c1:
-                if st.button("🔄 换一道", key=f"reroll_{meal}"):
-                    new = recommend_dishes(meal, 1, exclude_ids=[d['id']])
-                    if new:
-                        st.session_state['today_dishes'][meal] = new
-                        st.rerun()
-            with c2:
-                if st.button("📋 详情", key=f"detail_{meal}"):
-                    st.session_state['view_recipe_id'] = d['id']
-                    st.session_state['page'] = '菜库'
-                    st.rerun()
-            with c3:
-                if st.button(f"✅ 记录 {meal}餐吃这道", key=f"eat_{meal}", type="primary"):
-                    execute("""
-                        INSERT INTO eaten (recipe_id, date, meal) VALUES (?, ?, ?)
-                    """, (d['id'], date.today().isoformat(), meal))
-                    execute("""
-                        UPDATE recipes SET total_eaten = total_eaten + 1, last_eaten = ? WHERE id = ?
-                    """, (date.today().isoformat(), d['id']))
-                    st.success(f"已记录 {meal}餐：{d['name']}")
-                    st.rerun()
-
-
-def render_pick():
-    """出菜页：场景筛选 + 加权"""
-    st.markdown("## 换个新菜")
-    
-    # 心情 + 场景
-    st.markdown("### 心情")
-    mood_cols = st.columns(5)
-    moods = ['累', '开心', '招待', '加班', '想家']
-    if 'mood' not in st.session_state:
-        st.session_state['mood'] = '全部'
-    for i, m in enumerate(moods):
-        with mood_cols[i]:
-            if st.button(m, key=f"mood_{m}", 
-                         type="primary" if st.session_state.mood == m else "secondary"):
-                st.session_state.mood = m
-                st.rerun()
-    if st.session_state.mood == '全部':
-        st.session_state.mood = None
-    
-    # 菜系筛选
-    st.markdown("### 菜系")
-    cats = query("SELECT DISTINCT category FROM recipes WHERE source='主菜谱' AND category IS NOT NULL")
-    cat_list = ['全部'] + [c['category'] for c in cats]
-    cat_cols = st.columns(len(cat_list))
-    if 'cat' not in st.session_state:
-        st.session_state.cat = '全部'
-    for i, c in enumerate(cat_list):
-        with cat_cols[i]:
-            if st.button(c, key=f"cat_{c}",
-                         type="primary" if st.session_state.cat == c else "secondary"):
-                st.session_state.cat = c
+    cats = [
+        ('🍳', '自己做'),
+        ('🥡', '外卖'),
+        ('🛒', '小象半成品'),
+        ('🍽️', '外出'),
+    ]
+    cols = st.columns(4)
+    for i, (emoji, name) in enumerate(cats):
+        with cols[i]:
+            is_active = (st.session_state.category == name)
+            if st.button(f"{emoji} {name}", key=f"cat_{name}", use_container_width=True, type="primary" if is_active else "secondary"):
+                st.session_state.category = name
                 st.rerun()
     
-    # 出菜
+    # === 心情/场景选择 ===
+    st.markdown("### 💭 心情/场景（多选）")
+    moods_data = query("SELECT name, category FROM moods ORDER BY id")
+    if 'moods_selected' not in st.session_state:
+        st.session_state.moods_selected = []
+    
+    mood_chips = " ".join([f"<span class='chip'>{m['name']}</span>" for m in moods_data])
+    st.markdown(mood_chips, unsafe_allow_html=True)
+    
+    cols = st.columns(min(4, len(moods_data)))
+    for i, m in enumerate(moods_data):
+        with cols[i % 4]:
+            is_active = m['name'] in st.session_state.moods_selected
+            if st.button(m['name'], key=f"mood_{m['name']}", use_container_width=True, type="primary" if is_active else "secondary"):
+                if is_active:
+                    st.session_state.moods_selected.remove(m['name'])
+                else:
+                    st.session_state.moods_selected.append(m['name'])
+                st.rerun()
+    
     st.markdown("---")
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        n = st.slider("抽几道？", 1, 10, 5)
-        if st.button("✨ 开始推荐", type="primary", use_container_width=True):
-            where = "source = '主菜谱'"
-            params = []
-            if st.session_state.cat != '全部':
-                where += " AND category = ?"
-                params.append(st.session_state.cat)
-            candidates = query(f"SELECT * FROM recipes WHERE {where}", params)
-            
-            # 简单加权
-            if st.session_state.mood == '累':
-                candidates = [c for c in candidates if not c['duration'] or c['duration'] <= 30]
-            
-            random.shuffle(candidates)
-            st.session_state['pick_result'] = candidates[:n]
-            st.rerun()
     
-    # 显示结果
+    # === 抽菜按钮 ===
+    st.markdown("### 🎲 抽菜")
+    if st.button("✨ 抽！✨", use_container_width=True, type="primary"):
+        st.session_state.pick_result = do_pick(st.session_state.category, st.session_state.moods_selected)
+    
+    # === 抽菜结果 ===
     if 'pick_result' in st.session_state and st.session_state.pick_result:
-        st.markdown("### 推荐给你")
-        for d in st.session_state.pick_result:
-            with st.container():
+        result = st.session_state.pick_result
+        st.markdown("### 🍽️ 今日菜谱")
+        
+        if result['type'] == '自己做':
+            st.markdown("**早 + 午（同款）+ 晚（减脂期）+ 梨汤**")
+            
+            # 早+午 同款
+            st.markdown("#### 🌅 早 + 午（同款）")
+            for d in result['lunch_pair']:
                 st.markdown(f"""
-                <div class="recipe-card">
-                  <h3 style="margin-top:0">{d['name']}</h3>
-                  <p>
-                    <span class="chip">{d['category']}</span>
-                    {f'<span class="chip">⏰ {d["duration"]}min</span>' if d['duration'] else ''}
-                  </p>
+                <div class="recipe-card-big">
+                    <div style="font-size:16px;font-weight:600;">{d['name']}</div>
+                    <div style="margin-top:6px;"><span class="chip chip-purple">{d['cat']}</span></div>
                 </div>
                 """, unsafe_allow_html=True)
-                if st.button(f"📋 看 {d['name']} 详情", key=f"pick_detail_{d['id']}"):
-                    st.session_state['view_recipe_id'] = d['id']
-                    st.session_state['page'] = '菜库'
-                    st.rerun()
+            
+            # 晚餐
+            st.markdown("#### 🌙 晚（减脂期）")
+            for d in result['dinner']:
+                st.markdown(f"""
+                <div class="recipe-card-big">
+                    <div style="font-size:16px;font-weight:600;">{d['name']}</div>
+                    <div style="margin-top:6px;"><span class="chip chip-orange">{d['cat']} · 减脂期</span></div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # 梨汤
+            if result.get('pear_soup'):
+                st.markdown("#### 🍐 梨汤（工作日午餐）")
+                st.markdown(f"""
+                <div class="recipe-card-big">
+                    <div style="font-size:16px;font-weight:600;">{result['pear_soup']}</div>
+                    <div style="margin-top:6px;"><span class="chip chip-green">润肺 · 每天</span></div>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        elif result['type'] in ('外卖', '外出', '小象半成品'):
+            st.markdown(f"#### 🍴 {result['type']}推荐")
+            for d in result['items']:
+                st.markdown(f"""
+                <div class="recipe-card-big">
+                    <div style="font-size:16px;font-weight:600;">{d['name']}</div>
+                    <div style="color:{GRAY_TEXT};font-size:13px;margin-top:4px;">{d.get('dishes', d.get('cat', ''))}</div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # 记录按钮
+            if st.button("📝 记录我选了这个", key="record_takeout", type="primary"):
+                execute(
+                    "INSERT INTO takeout_log (log_date, meal, source, dish) VALUES (?, ?, ?, ?)",
+                    (date.today().isoformat(), '午', result['type'], result['items'][0]['name'] if result['items'] else '')
+                )
+                st.success("✅ 已记录！本周额度 -1")
+                st.rerun()
 
 
-def render_history():
-    """历史页：日历 + 打卡"""
-    st.markdown("## 我们吃了什么")
-    
-    # 今日打卡
-    st.markdown("### 今日")
-    today_records = query("""
-        SELECT e.*, r.name as recipe_name, r.category 
-        FROM eaten e JOIN recipes r ON e.recipe_id = r.id 
-        WHERE e.date = ?
-    """, (date.today().isoformat(),))
-    
-    meals = ['早', '午', '晚']
-    for meal in meals:
-        eaten = [t for t in today_records if t['meal'] == meal]
-        if eaten:
-            e = eaten[0]
-            rating_str = "★" * (e['rating'] or 0) if e['rating'] else ''
-            st.markdown(f"""
-            <div class="recipe-card">
-              <h4>✅ {meal}餐：{e['recipe_name']}</h4>
-              <p class="rating">{rating_str}</p>
-              {f'<div class="tip-box">💡 {e["tips"]}</div>' if e['tips'] else ''}
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-            <div class="recipe-card">
-              <h4>⏳ {meal}餐：还没记录</h4>
-              <p style="color:{GRAY_TEXT}">去"今日"页抽一道吃</p>
-            </div>
-            """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # 最近 7 天
-    st.markdown("### 最近 7 天")
-    week_ago = (date.today() - timedelta(days=7)).isoformat()
-    recent = query("""
-        SELECT e.*, r.name as recipe_name 
-        FROM eaten e JOIN recipes r ON e.recipe_id = r.id 
-        WHERE e.date >= ? ORDER BY e.date DESC, e.meal
-    """, (week_ago,))
-    
-    if recent:
-        # 按日期分组
-        from collections import defaultdict
-        by_date = defaultdict(list)
-        for r in recent:
-            by_date[r['date']].append(r)
-        for d, items in list(by_date.items())[:7]:
-            with st.expander(f"📅 {d} ({len(items)} 道)"):
-                for it in items:
-                    st.markdown(f"- **{it['meal']}餐**：{it['recipe_name']} {'★' * (it['rating'] or 0) if it['rating'] else ''}")
-                    if it['tips']:
-                        st.caption(f"  💡 {it['tips']}")
-    else:
-        st.markdown("""
-        <div class="empty-state">
-          <div class="emoji">📅</div>
-          <p>最近 7 天还没有记录</p>
-        </div>
-        """, unsafe_allow_html=True)
+def do_pick(category, moods):
+    """执行抽菜逻辑"""
+    if category == '自己做':
+        # 早+午 同款（从主菜谱）
+        lunch_pair = recommend_self_cook('午')
+        # 晚 减脂期
+        diet = query("SELECT name FROM recipes WHERE source='减脂期' AND category IN ('肉', '海鲜') ORDER BY RANDOM() LIMIT 1")
+        diet_veg = query("SELECT name FROM recipes WHERE source='减脂期' AND category='素菜' ORDER BY RANDOM() LIMIT 1")
+        diet_staple = query("SELECT name FROM recipes WHERE source='减脂期' AND category='主食' ORDER BY RANDOM() LIMIT 1")
+        dinner = []
+        if diet: dinner.append({'name': diet[0]['name'], 'cat': '肉/海鲜'})
+        if diet_veg: dinner.append({'name': diet_veg[0]['name'], 'cat': '素菜'})
+        if diet_staple: dinner.append({'name': diet_staple[0]['name'], 'cat': '主食'})
+        
+        # 梨汤（工作日午餐）
+        pear_soup = None
+        if is_workday():
+            pear_rows = query("SELECT name FROM lung_foods WHERE type='梨汤' ORDER BY RANDOM() LIMIT 1")
+            if pear_rows:
+                pear_soup = pear_rows[0]['name']
+        
+        return {
+            'type': '自己做',
+            'lunch_pair': lunch_pair,
+            'dinner': dinner,
+            'pear_soup': pear_soup,
+        }
+    elif category == '外卖':
+        items = recommend_takeout('外卖')
+        return {'type': '外卖', 'items': items}
+    elif category == '外出':
+        items = recommend_takeout('外出')
+        return {'type': '外出', 'items': items}
+    elif category == '小象半成品':
+        items = recommend_xiaoxiang()
+        return {'type': '小象半成品', 'items': items}
+    return None
 
 
-def render_library():
-    """菜库页：菜谱列表 + 详情 + 吃完记录"""
-    # 详情模式
-    if 'view_recipe_id' in st.session_state and st.session_state.view_recipe_id:
-        render_recipe_detail(st.session_state.view_recipe_id)
-        return
-    
-    st.markdown("## 菜谱库")
-    
-    # 统计
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        n_main = query("SELECT COUNT(*) as c FROM recipes WHERE source='主菜谱'")[0]['c']
-        st.markdown(f'<div class="stat-num">{n_main}</div><div class="stat-label">主菜谱</div>', unsafe_allow_html=True)
-    with col2:
-        n_xianovo = query("SELECT COUNT(*) as c FROM recipes WHERE source='小象超市'")[0]['c']
-        st.markdown(f'<div class="stat-num">{n_xianovo}</div><div class="stat-label">小象超市</div>', unsafe_allow_html=True)
-    with col3:
-        n_eaten = query("SELECT COUNT(*) as c FROM recipes WHERE total_eaten > 0")[0]['c']
-        st.markdown(f'<div class="stat-num">{n_eaten}</div><div class="stat-label">吃过的</div>', unsafe_allow_html=True)
-    with col4:
-        n_total_eaten = query("SELECT COUNT(*) as c FROM eaten")[0]['c']
-        st.markdown(f'<div class="stat-num">{n_total_eaten}</div><div class="stat-label">总打卡</div>', unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # 搜索
-    search = st.text_input("🔍 搜菜名 / 主料", "")
-    
-    # 来源筛选
-    src = st.selectbox("来源", ["全部", "主菜谱", "小象超市", "外卖"])
+# ============= 发现 =============
+def render_discover():
+    """发现：菜库浏览"""
+    st.markdown("## 🔍 发现")
     
     # 分类筛选
-    cats = query("SELECT DISTINCT category FROM recipes WHERE category IS NOT NULL ORDER BY category")
-    cat_list = ['全部'] + [c['category'] for c in cats]
-    cat = st.selectbox("分类", cat_list)
+    if 'filter_cat' not in st.session_state:
+        st.session_state.filter_cat = '全部'
+    
+    cats = ['全部', '肉', '海鲜', '素菜', '主食', '汤']
+    cols = st.columns(len(cats))
+    for i, c in enumerate(cats):
+        with cols[i]:
+            is_active = (st.session_state.filter_cat == c)
+            if st.button(c, key=f"filter_{c}", use_container_width=True, type="primary" if is_active else "secondary"):
+                st.session_state.filter_cat = c
+                st.rerun()
+    
+    # 搜索
+    search = st.text_input("🔍 搜索菜名", "")
     
     # 查询
-    where = "1=1"
-    params = []
+    if st.session_state.filter_cat == '全部':
+        sql = "SELECT * FROM recipes WHERE source IN ('主菜谱', '减脂期')"
+    else:
+        sql = f"SELECT * FROM recipes WHERE source IN ('主菜谱', '减脂期') AND category=?"
+    
     if search:
-        where += " AND name LIKE ?"
-        params.append(f"%{search}%")
-    if src != "全部":
-        where += " AND source = ?"
-        params.append(src)
-    if cat != "全部":
-        where += " AND category = ?"
-        params.append(cat)
+        sql += " AND name LIKE ?"
+        rows = query(sql + " ORDER BY source, name", (f"%{search}%",) if st.session_state.filter_cat == '全部' else (st.session_state.filter_cat, f"%{search}%"))
+    else:
+        rows = query(sql + " ORDER BY source, name", ())
     
-    recipes = query(f"SELECT * FROM recipes WHERE {where} ORDER BY total_eaten DESC, name LIMIT 200", params)
+    st.markdown(f"### 找到 {len(rows)} 道菜")
     
-    st.caption(f"共 {len(recipes)} 道")
-    
-    # 列表
-    for d in recipes:
-        with st.container():
-            eaten_str = f'<span class="chip">吃过 {d["total_eaten"]} 次</span>' if d['total_eaten'] else ''
-            rating_str = f'<span class="rating">{"★" * int(d["avg_rating"]) if d["avg_rating"] else ""}</span>' if d['avg_rating'] else ''
-            
+    # 网格展示
+    cols = st.columns(2)
+    for i, r in enumerate(rows):
+        with cols[i % 2]:
             st.markdown(f"""
             <div class="recipe-card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <h4 style="margin:0">{d['name']}</h4>
-                {rating_str}
-              </div>
-              <p style="margin:8px 0">
-                <span class="chip">{d['source']}</span>
-                {f'<span class="chip">{d["category"]}</span>' if d['category'] else ''}
-                {eaten_str}
-                {f'<span class="chip-gray">上次 {d["last_eaten"]}</span>' if d['last_eaten'] else ''}
-              </p>
+                <div style="font-size:15px;font-weight:600;">{r['name']}</div>
+                <div style="margin-top:6px;">
+                    <span class="chip chip-purple">{r['category']}</span>
+                    <span class="chip">{r['source']}</span>
+                </div>
             </div>
             """, unsafe_allow_html=True)
-            
-            if st.button(f"📋 详情", key=f"lib_detail_{d['id']}"):
-                st.session_state['view_recipe_id'] = d['id']
+
+
+# ============= 日历 =============
+def render_calendar():
+    """日历：历史打卡"""
+    st.markdown("## 📅 日历")
+    
+    # 本月范围
+    today = date.today()
+    first_day = today.replace(day=1)
+    if first_day.month == 12:
+        next_month = first_day.replace(year=first_day.year + 1, month=1)
+    else:
+        next_month = first_day.replace(month=first_day.month + 1)
+    last_day = next_month - timedelta(days=1)
+    
+    # 本月 eaten 记录
+    rows = query(
+        "SELECT * FROM eaten WHERE eaten_date BETWEEN ? AND ? ORDER BY eaten_date DESC",
+        (first_day.isoformat(), last_day.isoformat())
+    )
+    eaten_by_date = {}
+    for r in rows:
+        d = r['eaten_date']
+        if d not in eaten_by_date:
+            eaten_by_date[d] = []
+        eaten_by_date[d].append(dict(r))
+    
+    st.markdown(f"### {first_day.year} 年 {first_day.month} 月")
+    st.markdown(f"本月共记录 {len(rows)} 餐")
+    
+    # 显示本月所有吃的
+    if rows:
+        for r in rows[:30]:
+            rating = '⭐' * r['rating'] if r['rating'] else '未评'
+            st.markdown(f"""
+            <div class="recipe-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <div style="font-size:15px;font-weight:600;">{r['dish_name']}</div>
+                        <div style="margin-top:4px;">
+                            <span class="chip">{r['meal']}</span>
+                            <span class="chip chip-purple">{r['source'] or '自己'}</span>
+                            <span class="chip">{rating}</span>
+                        </div>
+                        {f'<div style="color:{GRAY_TEXT};font-size:12px;margin-top:4px;">{r["tips"]}</div>' if r['tips'] else ''}
+                    </div>
+                    <div style="color:{GRAY_TEXT};font-size:12px;">{r['eaten_date']}</div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""<div class="tip">📝 本月还没记录。<br>从首页点 "记录我选了这个" 就能记到日历。</div>""", unsafe_allow_html=True)
+    
+    # 快速记录按钮
+    st.markdown("---")
+    st.markdown("### ➕ 快速记录")
+    with st.form("quick_log"):
+        dish = st.text_input("菜名")
+        meal = st.selectbox("餐次", ['早', '午', '晚'])
+        rating = st.slider("评分", 1, 5, 4)
+        tips = st.text_area("小贴士/感想（可选）")
+        if st.form_submit_button("保存", type="primary"):
+            if dish:
+                execute(
+                    "INSERT INTO eaten (dish_name, meal, eaten_date, source, rating, tips) VALUES (?, ?, ?, ?, ?, ?)",
+                    (dish, meal, date.today().isoformat(), '自做', rating, tips)
+                )
+                st.success(f"✅ 已记录：{dish}")
                 st.rerun()
 
 
-def render_recipe_detail(recipe_id):
-    """菜详情页（核心）"""
-    r = query("SELECT * FROM recipes WHERE id = ?", (recipe_id,))[0]
+# ============= 冰箱 =============
+def render_fridge():
+    """冰箱：3 层 + 详细表格"""
+    st.markdown("## 🧊 冰箱")
     
-    # 返回
-    if st.button("← 返回菜库"):
-        st.session_state.view_recipe_id = None
-        st.rerun()
+    # 层选择
+    if 'fridge_layer' not in st.session_state:
+        st.session_state.fridge_layer = 1
     
-    # 标题
-    st.markdown(f"""
-    <h1 style="margin-bottom:8px">{r['name']}</h1>
-    <p>
-      <span class="chip">{r['source']}</span>
-      {f'<span class="chip">{r["category"]}</span>' if r['category'] else ''}
-    </p>
-    """, unsafe_allow_html=True)
+    cols = st.columns(3)
+    for i in range(1, 4):
+        with cols[i-1]:
+            is_active = (st.session_state.fridge_layer == i)
+            if st.button(f"第 {i} 层", key=f"layer_{i}", use_container_width=True, type="primary" if is_active else "secondary"):
+                st.session_state.fridge_layer = i
+                st.rerun()
+    
+    # 添加新食物
+    with st.expander("➕ 添加新食物", expanded=False):
+        with st.form("add_food"):
+            name = st.text_input("食物名称")
+            food_type = st.selectbox("类型（决定保质期）", ['蔬菜', '冷藏', '冷冻'])
+            put_date = st.date_input("放入日期", value=date.today())
+            if st.form_submit_button("加入冰箱", type="primary"):
+                if name:
+                    execute(
+                        "INSERT INTO fridge (name, layer, food_type, put_date) VALUES (?, ?, ?, ?)",
+                        (name, st.session_state.fridge_layer, food_type, put_date.isoformat())
+                    )
+                    st.success(f"✅ {name} 已加入第 {st.session_state.fridge_layer} 层")
+                    st.rerun()
+    
+    st.markdown("---")
+    
+    # 显示当前层
+    layer = st.session_state.fridge_layer
+    items = [it for it in get_fridge_items() if it['layer'] == layer]
+    
+    st.markdown(f"### 第 {layer} 层（{len(items)} 件）")
+    
+    if not items:
+        st.markdown(f"""<div class="tip">📦 第 {layer} 层还是空的<br>点上面"➕ 添加新食物"加入</div>""", unsafe_allow_html=True)
+        return
+    
+    # 详细表格（按到期排序）
+    for it in items:
+        if it['expired']:
+            stype_class = 'urgent'
+            status = f"❌ 已过期 {-it['days_left']} 天"
+            chip = 'chip-red'
+        elif it['days_left'] <= 1:
+            stype_class = 'warning'
+            status = f"⚠️ 明天到期"
+            chip = 'chip-orange'
+        elif it['days_left'] <= 14 and it['food_type'] == '冷冻':
+            stype_class = 'warning'
+            status = f"⚠️ 还剩 {it['days_left']} 天"
+            chip = 'chip-orange'
+        else:
+            stype_class = 'recipe-card'
+            status = f"✅ 还剩 {it['days_left']} 天"
+            chip = 'chip-green'
+        
+        st.markdown(f"""
+        <div class="{stype_class}">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div style="font-size:15px;font-weight:600;">{it['name']}</div>
+                    <div style="margin-top:4px;">
+                        <span class="chip {chip}">{it['food_type']}</span>
+                        <span class="chip">放入: {it['put_date']}</span>
+                        <span class="chip">保质期: {it['days_valid']} 天</span>
+                    </div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:14px;font-weight:600;">{status}</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 标记已用按钮
+        if st.button(f"✅ 用掉了：{it['name']}", key=f"used_{it['id']}"):
+            execute("UPDATE fridge SET used=1 WHERE id=?", (it['id'],))
+            st.rerun()
+
+
+# ============= 我的 =============
+def render_profile():
+    """我的：统计 + 设置"""
+    st.markdown("## 👤 我的")
     
     # 统计
-    st.markdown(f"""
-    <div class="stat-banner">
-      <div style="display:flex;justify-content:space-around">
-        <div>
-          <div class="stat-num">{r['total_eaten']}</div>
-          <div class="stat-label">累计吃过</div>
+    total_eaten = query_one("SELECT COUNT(*) as cnt FROM eaten")['cnt']
+    month_eaten = query_one(
+        "SELECT COUNT(*) as cnt FROM eaten WHERE eaten_date >= ?",
+        (date.today().replace(day=1).isoformat(),)
+    )['cnt']
+    week_takeout = get_takeout_count_this_week()
+    fridge_total = query_one("SELECT COUNT(*) as cnt FROM fridge WHERE used=0")['cnt']
+    
+    cols = st.columns(2)
+    with cols[0]:
+        st.markdown(f"""
+        <div class="recipe-card-big">
+            <div style="color:{GRAY_TEXT};font-size:12px;">累计记录</div>
+            <div style="font-size:32px;font-weight:700;color:{PURPLE};">{total_eaten}</div>
+            <div style="color:{GRAY_TEXT};font-size:12px;">餐</div>
         </div>
-        <div>
-          <div class="stat-num">{f"{r['avg_rating']:.1f}" if r['avg_rating'] else "-"}</div>
-          <div class="stat-label">平均评分</div>
+        """, unsafe_allow_html=True)
+    with cols[1]:
+        st.markdown(f"""
+        <div class="recipe-card-big">
+            <div style="color:{GRAY_TEXT};font-size:12px;">本月记录</div>
+            <div style="font-size:32px;font-weight:700;color:{PURPLE};">{month_eaten}</div>
+            <div style="color:{GRAY_TEXT};font-size:12px;">餐</div>
         </div>
-        <div>
-          <div class="stat-num">{f"⭐{int(r['avg_rating'])}" if r['avg_rating'] else "未评分"}</div>
-          <div class="stat-label">推荐度</div>
+        """, unsafe_allow_html=True)
+    with cols[0]:
+        st.markdown(f"""
+        <div class="recipe-card-big">
+            <div style="color:{GRAY_TEXT};font-size:12px;">本周外卖/外出</div>
+            <div style="font-size:32px;font-weight:700;color:{ORANGE};">{week_takeout}/{WEEKLY_TAKEOUT_LIMIT}</div>
+            <div style="color:{GRAY_TEXT};font-size:12px;">还剩 {WEEKLY_TAKEOUT_LIMIT - week_takeout}</div>
         </div>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("")
-    
-    # 做这道
-    if st.button("✅ 今日做这道", type="primary", use_container_width=True):
-        execute("""
-            INSERT INTO eaten (recipe_id, date, meal) VALUES (?, ?, ?)
-        """, (r['id'], date.today().isoformat(), '午'))
-        execute("""
-            UPDATE recipes SET total_eaten = total_eaten + 1, last_eaten = ? WHERE id = ?
-        """, (date.today().isoformat(), r['id']))
-        st.success(f"已记录：{r['name']}，记得吃完来打分和拍照！")
-        st.rerun()
+        """, unsafe_allow_html=True)
+    with cols[1]:
+        st.markdown(f"""
+        <div class="recipe-card-big">
+            <div style="color:{GRAY_TEXT};font-size:12px;">冰箱库存</div>
+            <div style="font-size:32px;font-weight:700;color:{GREEN};">{fridge_total}</div>
+            <div style="color:{GRAY_TEXT};font-size:12px;">件</div>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     
-    # 吃完记录表单
-    st.markdown("### 📝 吃完记录")
-    
-    eaten_today = query("""
-        SELECT id, meal, rating, tips, photo_path 
-        FROM eaten 
-        WHERE recipe_id = ? AND date = ? 
-        ORDER BY id DESC LIMIT 1
-    """, (r['id'], date.today().isoformat()))
-    
-    if eaten_today:
-        et = eaten_today[0]
-        st.info(f"今日已记录（{et['meal']}餐）")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            rating = st.select_slider("⭐ 评分", options=[1, 2, 3, 4, 5], value=et['rating'] or 3, key="detail_rating")
-        with col2:
-            mood = st.selectbox("💭 心情", ['累', '开心', '招待', '加班', '想家', '其他'], key="detail_mood")
-        
-        tips = st.text_area("💡 今天的 tips / 改进", value=et['tips'] or "", key="detail_tips",
-                            placeholder="比如：煎老了下次小火 / 加粉丝也好吃 / 忘了放蚝油")
-        
-        # 照片上传
-        photo = st.file_uploader("📷 上传照片（可选）", type=['jpg', 'jpeg', 'png'], key="detail_photo")
-        
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("保存记录", type="primary"):
-                photo_path = et['photo_path']
-                if photo:
-                    # 保存照片
-                    fname = f"{r['id']}_{date.today().isoformat()}_{datetime.now().strftime('%H%M%S')}.jpg"
-                    save_path = PHOTOS_DIR / fname
-                    with open(save_path, 'wb') as f:
-                        f.write(photo.read())
-                    photo_path = str(save_path)
-                
-                # 更新 eaten 记录
-                execute("""
-                    UPDATE eaten SET rating=?, tips=?, mood=?, photo_path=? WHERE id=?
-                """, (rating, tips, mood, photo_path, et['id']))
-                
-                # 更新 recipe 统计
-                avg_row = query("SELECT AVG(rating) as a, COUNT(*) as c FROM eaten WHERE recipe_id=? AND rating IS NOT NULL", (r['id'],))[0]
-                execute("UPDATE recipes SET avg_rating=? WHERE id=?", (avg_row['a'], r['id']))
-                
-                st.success("已保存！")
-                st.rerun()
-        with col2:
-            if et['photo_path'] and os.path.exists(et['photo_path']):
-                st.image(et['photo_path'], caption="上次照片", width=200)
-    
-    st.markdown("---")
-    
-    # 吃法时间线
-    st.markdown("### 📅 吃法时间线（你的历史）")
-    history = query("""
-        SELECT * FROM eaten WHERE recipe_id = ? AND tips IS NOT NULL 
-        ORDER BY date DESC LIMIT 20
-    """, (r['id'],))
-    
-    if history:
-        for h in history:
-            st.markdown(f"""
-            <div class="timeline-item">
-              <b>{h['date']} {h['meal']}餐</b>
-              <span class="rating">{"★" * (h['rating'] or 0)}</span>
-              {f'<div class="tip-box">💡 {h["tips"]}</div>' if h['tips'] else ''}
-            </div>
-            """, unsafe_allow_html=True)
-    else:
-        st.caption("还没有 tips，做几次就有经验了")
-    
-    st.markdown("---")
-    
-    # 收藏 / 跳过
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("❤️ 收藏", use_container_width=True):
-            execute("UPDATE recipes SET favorite=1 WHERE id=?", (r['id'],))
-            st.success("已收藏")
-            st.rerun()
-    with col2:
-        if st.button("👎 跳过", use_container_width=True):
-            execute("UPDATE recipes SET skipped=1 WHERE id=?", (r['id'],))
-            st.success("已标记跳过")
-            st.rerun()
-
-
-def render_stats():
-    """统计页：所有数据"""
-    st.markdown("## 📊 你的美食记忆")
-    
-    # 总数据
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("### 累计")
-        n_days = query("SELECT COUNT(DISTINCT date) as c FROM eaten")[0]['c']
-        n_eaten = query("SELECT COUNT(*) as c FROM eaten")[0]['c']
-        n_recipes = query("SELECT COUNT(DISTINCT recipe_id) as c FROM eaten")[0]['c']
-        st.markdown(f"打卡 **{n_days}** 天")
-        st.markdown(f"吃过 **{n_eaten}** 道")
-        st.markdown(f"解锁 **{n_recipes}** 种菜")
-    
-    with col2:
-        st.markdown("### 本月")
-        first_day = date.today().replace(day=1).isoformat()
-        m_days = query("SELECT COUNT(DISTINCT date) as c FROM eaten WHERE date >= ?", (first_day,))[0]['c']
-        m_eaten = query("SELECT COUNT(*) as c FROM eaten WHERE date >= ?", (first_day,))[0]['c']
-        st.markdown(f"打卡 **{m_days}** 天")
-        st.markdown(f"吃过 **{m_eaten}** 道")
-    
-    st.markdown("---")
-    
-    # 你的 top 5
-    st.markdown("### 🏆 你的 Top 5")
-    top = query("""
-        SELECT name, total_eaten, avg_rating 
-        FROM recipes 
-        WHERE total_eaten > 0
-        ORDER BY total_eaten DESC LIMIT 5
-    """)
-    
+    # Top 5
+    st.markdown("### 🏆 评分 Top 5")
+    top = query("SELECT dish_name, AVG(rating) as avg_r, COUNT(*) as cnt FROM eaten WHERE rating IS NOT NULL GROUP BY dish_name ORDER BY avg_r DESC, cnt DESC LIMIT 5")
     if top:
-        for i, t in enumerate(top, 1):
-            st.markdown(f"""
-            <div class="recipe-card">
-              <h4>#{i} {t['name']}</h4>
-              <p>吃过 <b>{t['total_eaten']}</b> 次 · 平均 ★{f"{t['avg_rating']:.1f}" if t['avg_rating'] else '-'}</p>
-            </div>
-            """, unsafe_allow_html=True)
+        for i, r in enumerate(top, 1):
+            stars = '⭐' * int(r['avg_r'])
+            st.markdown(f"{i}. **{r['dish_name']}** {stars} ({r['cnt']} 次)")
     else:
-        st.caption("还没有记录，去「今日」抽菜吃吧！")
+        st.markdown(f"""<div class="tip">还没有评分数据</div>""", unsafe_allow_html=True)
     
     st.markdown("---")
     
     # 数据导出
-    st.markdown("### 📦 数据管理")
-    if st.button("导出全部数据为 JSON", use_container_width=True):
+    st.markdown("### 📤 数据导出")
+    if st.button("⬇️ 导出全部数据 (JSON)", use_container_width=True):
         all_data = {
-            'recipes': [dict(r) for r in query("SELECT * FROM recipes")],
-            'eaten': [dict(e) for e in query("SELECT * FROM eaten")],
             'exported_at': datetime.now().isoformat(),
+            'recipes': [dict(r) for r in query("SELECT * FROM recipes")],
+            'eaten': [dict(r) for r in query("SELECT * FROM eaten")],
+            'fridge': [dict(r) for r in query("SELECT * FROM fridge")],
+            'takeout_log': [dict(r) for r in query("SELECT * FROM takeout_log")],
         }
         fname = f"recipes_{date.today().isoformat()}.json"
         with open(fname, 'w', encoding='utf-8') as f:
@@ -904,6 +837,16 @@ def render_stats():
         with open(fname, 'r', encoding='utf-8') as f:
             st.download_button("⬇️ 下载", f.read(), file_name=fname, mime="application/json")
         os.remove(fname)
+    
+    # 重置数据
+    st.markdown("### ⚠️ 危险操作")
+    with st.expander("🗑️ 重置所有数据（清空历史/冰箱/记录）"):
+        st.warning("此操作不可逆！所有吃的记录、冰箱库存、评分都会清空，但菜谱库保留。")
+        if st.button("确认重置", type="primary"):
+            for t in ['eaten', 'photos', 'fridge', 'takeout_log']:
+                execute(f"DELETE FROM {t}")
+            st.success("✅ 数据已重置")
+            st.rerun()
 
 
 # ============= 主入口 =============
@@ -914,7 +857,7 @@ def main():
         layout="centered",
         initial_sidebar_state="collapsed",
     )
-
+    
     # 隐藏 Streamlit 默认元素
     hide_streamlit_style = """
         <style>
@@ -926,24 +869,20 @@ def main():
         </style>
     """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-    
     st.markdown(CSS, unsafe_allow_html=True)
     
     page = render_sidebar()
     
-    if 'page' in st.session_state:
-        page = st.session_state.page
-    
-    if page == "今日":
+    if page == "首页":
         render_today()
-    elif page == "出菜":
-        render_pick()
-    elif page == "历史":
-        render_history()
-    elif page == "菜库":
-        render_library()
-    elif page == "统计":
-        render_stats()
+    elif page == "发现":
+        render_discover()
+    elif page == "日历":
+        render_calendar()
+    elif page == "冰箱":
+        render_fridge()
+    elif page == "我的":
+        render_profile()
 
 
 if __name__ == '__main__':

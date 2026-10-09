@@ -1,182 +1,201 @@
-"""数据库初始化 + 数据导入"""
+"""数据库初始化 + 数据导入（v1.0）"""
 import sqlite3
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'recipes.db')
 DATA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'parsed_data.json')
 
-# 设计 6 张表
+# ============= Schema =============
 SCHEMA = """
--- 菜谱主表（核心）
+-- 菜谱主表（含主菜谱、减脂期、小象超市等）
 CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL,
     category TEXT,
     sub_category TEXT,
-    source TEXT,
-    duration INTEGER,
-    difficulty TEXT,
-    seasons TEXT,
-    scenes TEXT,
-    spicy TEXT,
-    avoid TEXT,
-    avg_rating REAL DEFAULT 0,
-    total_eaten INTEGER DEFAULT 0,
-    last_eaten DATE,
-    notes TEXT,
-    favorite INTEGER DEFAULT 0,
-    skipped INTEGER DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    source TEXT,  -- 主菜谱 / 减脂期 / 小象超市
+    note TEXT,
+    UNIQUE(name, source)
 );
 
--- 吃过的记录（每次吃一条）
+-- 吃完记录
 CREATE TABLE IF NOT EXISTS eaten (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipe_id INTEGER,
-    date DATE,
-    meal TEXT,
-    rating INTEGER,
+    dish_name TEXT NOT NULL,
+    meal TEXT,  -- 早 / 午 / 晚
+    eaten_date DATE,
+    source TEXT,  -- 自做 / 外卖 / 外出 / 小象
+    rating INTEGER,  -- 1-5
     tips TEXT,
     mood TEXT,
     weather TEXT,
-    photo_path TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(recipe_id) REFERENCES recipes(id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 照片（独立表，可以挂在某次吃或某道菜上）
+-- 照片
 CREATE TABLE IF NOT EXISTS photos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    recipe_id INTEGER,
     eaten_id INTEGER,
     file_path TEXT NOT NULL,
     caption TEXT,
-    taken_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(recipe_id) REFERENCES recipes(id),
-    FOREIGN KEY(eaten_id) REFERENCES eaten(id)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 水果时令
-CREATE TABLE IF NOT EXISTS fruits (
+-- 冰箱
+CREATE TABLE IF NOT EXISTS fridge (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE,
-    season TEXT
+    name TEXT NOT NULL,
+    layer INTEGER,  -- 1 / 2 / 3
+    food_type TEXT,  -- 蔬菜 / 冷藏 / 冷冻
+    put_date DATE,
+    used INTEGER DEFAULT 0,  -- 0 在用 / 1 已用
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 健康相关
-CREATE TABLE IF NOT EXISTS health (
+-- 肺食材
+CREATE TABLE IF NOT EXISTS lung_foods (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    category TEXT,
-    item TEXT,
-    detail TEXT,
-    note TEXT
+    type TEXT,
+    name TEXT NOT NULL
 );
 
--- 餐厅外卖
+-- 饮料/甜点
+CREATE TABLE IF NOT EXISTS drinks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner TEXT,  -- po / bo / 公用
+    name TEXT NOT NULL
+);
+
+-- 餐厅
 CREATE TABLE IF NOT EXISTS restaurants (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    price REAL,
-    shop TEXT
+    name TEXT NOT NULL,
+    dishes TEXT,
+    type TEXT  -- 外卖 / 外出
+);
+
+-- 外卖/外出额度记录
+CREATE TABLE IF NOT EXISTS takeout_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    log_date DATE,
+    meal TEXT,  -- 早 / 午 / 晚
+    source TEXT,  -- 外卖 / 外出 / 小象
+    dish TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 心情/场景
+CREATE TABLE IF NOT EXISTS moods (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    category TEXT,  -- 救急 / 姨妈期 / 心情差
+    UNIQUE(name, category)
 );
 """
 
 
 def init_db():
-    """幂等的初始化函数：可重复调用，不会丢失用户数据"""
+    """幂等初始化函数"""
     os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data'), exist_ok=True)
     os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'photos'), exist_ok=True)
     
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     
-    # 执行 schema（IF NOT EXISTS 幂等）
     for stmt in SCHEMA.split(';'):
         s = stmt.strip()
         if s:
             cur.execute(s)
     conn.commit()
     
-    # 检查是否需要导入数据（只在空时导入，幂等）
+    # 检查是否需要导入数据
     count = cur.execute("SELECT COUNT(*) FROM recipes").fetchone()[0]
     if count > 0:
         conn.close()
-        return  # 已有数据，跳过导入，保留用户历史
+        return
     
     # 导入数据
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
     # 1. 主菜谱
-    for r in data['main_recipes']:
+    for r in data.get('main_recipes', []):
         cur.execute("""
-            INSERT OR IGNORE INTO recipes (name, category, source)
-            VALUES (?, ?, '主菜谱')
-        """, (r['name'], r['category']))
+            INSERT OR IGNORE INTO recipes (name, category, source, note)
+            VALUES (?, ?, '主菜谱', ?)
+        """, (r['name'], r['category'], r.get('note', '')))
     
-    # 2. 小象超市半成品
-    for r in data['xianovo']['半成品']:
+    # 2. 减脂期食谱
+    for r in data.get('diet_recipes', []):
+        cur.execute("""
+            INSERT OR IGNORE INTO recipes (name, category, source, note)
+            VALUES (?, ?, '减脂期', ?)
+        """, (r['name'], r['category'], r.get('note', '')))
+    
+    # 3. 小象超市
+    for r in data.get('xiaoxiang', []):
         cur.execute("""
             INSERT OR IGNORE INTO recipes (name, sub_category, source, category)
             VALUES (?, ?, '小象超市', '半成品')
-        """, (r['name'], r.get('subtype', '')))
+        """, (r['name'], r.get('type', '')))
     
-    # 3. 火锅采购（保留作库存选项）
-    for r in data['xianovo']['火锅采购']:
+    # 4. 肺食材
+    for r in data.get('lung_foods', []):
         cur.execute("""
-            INSERT OR IGNORE INTO recipes (name, sub_category, source, category)
-            VALUES (?, ?, '小象超市', '火锅食材')
-        """, (r['name'], r.get('subtype', '')))
+            INSERT OR IGNORE INTO lung_foods (type, name) VALUES (?, ?)
+        """, (r['type'], r['name']))
     
-    # 4. 外卖
-    for r in data['restaurants']:
+    # 5. 饮料
+    for r in data.get('drinks', []):
         cur.execute("""
-            INSERT OR IGNORE INTO recipes (name, source, category)
-            VALUES (?, '外卖', '外卖')
-        """, (f"{r['name']}（{r['shop']}）",))
+            INSERT OR IGNORE INTO drinks (owner, name) VALUES (?, ?)
+        """, (r['owner'], r['name']))
     
-    # 5. 水果时令
-    for f in data['fruits']:
+    # 6. 餐厅
+    for r in data.get('restaurants', []):
+        # 简单判断：菜名里有"饺子/海鲜/砂锅"等可能是外出，其他外卖
+        is_outdoor = any(kw in r['name'] for kw in ['饺子', '海鲜', '火锅', '小馆', '面馆', '茶', '咖啡'])
+        rtype = '外出' if is_outdoor else '外卖'
         cur.execute("""
-            INSERT OR IGNORE INTO fruits (name, season) VALUES (?, ?)
-        """, (f['name'], f['season']))
+            INSERT OR IGNORE INTO restaurants (name, dishes, type) VALUES (?, ?, ?)
+        """, (r['name'], r['dishes'], rtype))
     
-    # 6. 健康
-    for h in data['health']:
-        cur.execute("""
-            INSERT OR IGNORE INTO health (category, item, detail, note)
-            VALUES (?, ?, ?, ?)
-        """, (h['category'], h['item'], h.get('detail', ''), h.get('note', '')))
-    
-    # 7. 餐厅
-    for r in data['restaurants']:
-        cur.execute("""
-            INSERT OR IGNORE INTO restaurants (name, price, shop)
-            VALUES (?, ?, ?)
-        """, (r['name'], r['price'], r['shop']))
+    # 7. 心情/场景（默认列表）
+    default_moods = [
+        ('救急', '救急'),
+        ('姨妈期', '姨妈期'),
+        ('心情差', '心情差'),
+        ('加班', '加班'),
+        ('减脂', '减脂'),
+        ('招待', '招待'),
+        ('雨天', '雨天'),
+        ('二人食', '场景'),
+    ]
+    for m, cat in default_moods:
+        cur.execute("INSERT OR IGNORE INTO moods (name, category) VALUES (?, ?)", (m, cat))
     
     conn.commit()
-    
-    # 统计
-    cur.execute("SELECT COUNT(*) FROM recipes WHERE source='主菜谱'")
-    print(f"  主菜谱：{cur.fetchone()[0]} 道")
-    cur.execute("SELECT COUNT(*) FROM recipes WHERE source='小象超市'")
-    print(f"  小象超市：{cur.fetchone()[0]} 项")
-    cur.execute("SELECT COUNT(*) FROM recipes WHERE source='外卖'")
-    print(f"  外卖：{cur.fetchone()[0]} 道")
-    cur.execute("SELECT COUNT(*) FROM fruits")
-    print(f"  水果时令：{cur.fetchone()[0]} 种")
-    cur.execute("SELECT COUNT(*) FROM health")
-    print(f"  健康相关：{cur.fetchone()[0]} 条")
-    cur.execute("SELECT COUNT(*) FROM restaurants")
-    print(f"  餐厅：{cur.fetchone()[0]} 家")
-    
     conn.close()
-    print(f"\n✅ 数据库已建：{DB_PATH}")
+
+
+def reset_data():
+    """重置所有业务数据（保留 schema）—— 用于用户主动重置"""
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    for t in ['eaten', 'photos', 'fridge', 'takeout_log']:
+        cur.execute(f"DELETE FROM {t}")
+    conn.commit()
+    conn.close()
 
 
 if __name__ == '__main__':
     init_db()
+    print("✅ 数据库初始化完成")
+    # 显示数据统计
+    conn = sqlite3.connect(DB_PATH)
+    for t in ['recipes', 'lung_foods', 'drinks', 'restaurants', 'moods']:
+        n = conn.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+        print(f"  {t}: {n} 条")
+    conn.close()
