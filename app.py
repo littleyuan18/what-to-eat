@@ -15,6 +15,10 @@ HERE = Path(__file__).parent
 DB_PATH = HERE / 'data' / 'recipes.db'
 PHOTOS_DIR = HERE / 'data' / 'photos'
 
+# 启动时确保 data 目录存在（Streamlit Cloud 等环境）
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
+
 # ============= 配色（紫色点睛） =============
 PURPLE = '#7C5FB6'
 PURPLE_DARK = '#5A3D8F'
