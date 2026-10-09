@@ -19,6 +19,16 @@ PHOTOS_DIR = HERE / 'data' / 'photos'
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
 
+# 启动时自动初始化数据库（幂等，安全）
+import init_db
+try:
+    init_db.init_db()
+except Exception as _e:
+    # 不让启动错误印红屏
+    import traceback
+    print(f"[init_db] warning: {_e}")
+    traceback.print_exc()
+
 # ============= 配色（紫色点睛） =============
 PURPLE = '#7C5FB6'
 PURPLE_DARK = '#5A3D8F'

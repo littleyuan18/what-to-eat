@@ -86,21 +86,25 @@ CREATE TABLE IF NOT EXISTS restaurants (
 
 
 def init_db():
+    """幂等的初始化函数：可重复调用，不会丢失用户数据"""
     os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data'), exist_ok=True)
     os.makedirs(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'photos'), exist_ok=True)
     
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     
-    # 执行 schema
+    # 执行 schema（IF NOT EXISTS 幂等）
     for stmt in SCHEMA.split(';'):
         s = stmt.strip()
         if s:
             cur.execute(s)
+    conn.commit()
     
-    # 清空表（仅首次）
-    for table in ['recipes', 'eaten', 'photos', 'fruits', 'health', 'restaurants']:
-        cur.execute(f"DELETE FROM {table}")
+    # 检查是否需要导入数据（只在空时导入，幂等）
+    count = cur.execute("SELECT COUNT(*) FROM recipes").fetchone()[0]
+    if count > 0:
+        conn.close()
+        return  # 已有数据，跳过导入，保留用户历史
     
     # 导入数据
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
