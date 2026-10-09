@@ -26,13 +26,136 @@ PHOTOS_DIR = HERE / 'data' / 'photos'
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 PHOTOS_DIR.mkdir(parents=True, exist_ok=True)
 
-# 启动时自动初始化数据库（幂等）
-import init_db
+# Schema (内联保证 app.py 独立可用)
+SCHEMA_INLINE = """
+CREATE TABLE IF NOT EXISTS recipes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    category TEXT,
+    sub_category TEXT,
+    source TEXT,
+    note TEXT,
+    UNIQUE(name, source)
+);
+CREATE TABLE IF NOT EXISTS eaten (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    dish_name TEXT NOT NULL,
+    meal TEXT,
+    eaten_date DATE,
+    source TEXT,
+    rating INTEGER,
+    tips TEXT,
+    mood TEXT,
+    weather TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS photos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    eaten_id INTEGER,
+    file_path TEXT NOT NULL,
+    caption TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS fridge (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    layer INTEGER,
+    food_type TEXT,
+    put_date DATE,
+    used INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS lung_foods (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    type TEXT,
+    name TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS drinks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner TEXT,
+    name TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS restaurants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    dishes TEXT,
+    type TEXT
+);
+CREATE TABLE IF NOT EXISTS takeout_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    log_date DATE,
+    meal TEXT,
+    source TEXT,
+    dish TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE IF NOT EXISTS moods (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    category TEXT,
+    UNIQUE(name, category)
+);
+"""
+
+
+def _ensure_schema():
+    """保证所有表存在（独立调用，不依赖 init_db.py）"""
+    conn = sqlite3.connect(str(DB_PATH))
+    for stmt in SCHEMA_INLINE.split(';'):
+        s = stmt.strip()
+        if s:
+            try:
+                conn.execute(s)
+            except Exception as _e:
+                pass
+    conn.commit()
+    conn.close()
+
+
+def _ensure_data():
+    """保证有数据（如果 recipes 表为空，从 parsed_data.json 导入）"""
+    conn = sqlite3.connect(str(DB_PATH))
+    count = conn.execute("SELECT COUNT(*) FROM recipes").fetchone()[0]
+    if count > 0:
+        conn.close()
+        return
+    
+    data_path = HERE / 'parsed_data.json'
+    if not data_path.exists():
+        conn.close()
+        return
+    
+    with open(data_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    for r in data.get('main_recipes', []):
+        conn.execute("INSERT OR IGNORE INTO recipes (name, category, source, note) VALUES (?, ?, '主菜谱', ?)", (r['name'], r['category'], r.get('note', '')))
+    for r in data.get('diet_recipes', []):
+        conn.execute("INSERT OR IGNORE INTO recipes (name, category, source, note) VALUES (?, ?, '减脂期', ?)", (r['name'], r['category'], r.get('note', '')))
+    for r in data.get('xiaoxiang', []):
+        conn.execute("INSERT OR IGNORE INTO recipes (name, sub_category, source, category) VALUES (?, ?, '小象超市', '半成品')", (r['name'], r.get('type', '')))
+    for r in data.get('lung_foods', []):
+        conn.execute("INSERT OR IGNORE INTO lung_foods (type, name) VALUES (?, ?)", (r['type'], r['name']))
+    for r in data.get('drinks', []):
+        conn.execute("INSERT OR IGNORE INTO drinks (owner, name) VALUES (?, ?)", (r['owner'], r['name']))
+    for r in data.get('restaurants', []):
+        is_outdoor = any(kw in r['name'] for kw in ['饺子', '海鲜', '火锅', '小馆', '面馆', '茶', '咖啡'])
+        rtype = '外出' if is_outdoor else '外卖'
+        conn.execute("INSERT OR IGNORE INTO restaurants (name, dishes, type) VALUES (?, ?, ?)", (r['name'], r['dishes'], rtype))
+    for m, cat in [('救急', '救急'), ('姨妈期', '姨妈期'), ('心情差', '心情差'), ('加班', '加班'), ('减脂', '减脂'), ('招待', '招待'), ('雨天', '雨天'), ('二人食', '场景')]:
+        conn.execute("INSERT OR IGNORE INTO moods (name, category) VALUES (?, ?)", (m, cat))
+    
+    conn.commit()
+    conn.close()
+
+
+# 启动时建表 + 导入数据
 try:
-    init_db.init_db()
+    _ensure_schema()
+    _ensure_data()
 except Exception as _e:
     import traceback
-    print(f"[init_db] warning: {_e}")
+    print(f"[init] warning: {_e}")
     traceback.print_exc()
 
 # ============= 配色（紫色点睛） =============
