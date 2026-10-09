@@ -974,6 +974,22 @@ def render_profile():
 
 
 # ============= 主入口 =============
+def render_top_tabs():
+    """顶部 Tab 导航（不依赖 sidebar，mobile 友好）"""
+    if 'page' not in st.session_state:
+        st.session_state.page = '首页'
+    tabs_list = [('🍱', '首页'), ('🔍', '发现'), ('📅', '日历'), ('🧊', '冰箱'), ('👤', '我的')]
+    cols = st.columns(5)
+    for i, (emoji, name) in enumerate(tabs_list):
+        with cols[i]:
+            is_active = (st.session_state.page == name)
+            if st.button(f"{emoji} {name}", key=f"tab_{name}", use_container_width=True, type="primary" if is_active else "secondary"):
+                st.session_state.page = name
+                st.rerun()
+    st.markdown("---")
+    return st.session_state.page
+
+
 def main():
     st.set_page_config(
         page_title="今天吃什么",
@@ -995,7 +1011,7 @@ def main():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     st.markdown(CSS, unsafe_allow_html=True)
     
-    page = render_sidebar()
+    page = render_top_tabs()
     
     if page == "首页":
         render_today()
