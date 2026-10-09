@@ -560,7 +560,8 @@ def render_today():
     mood_chips = " ".join([f"<span class='chip'>{m['name']}</span>" for m in moods_data])
     st.markdown(mood_chips, unsafe_allow_html=True)
     
-    cols = st.columns(min(4, len(moods_data)))
+    # Streamlit 不支持动态 cols 参数，固定为 4 列
+    cols = st.columns(4)
     for i, m in enumerate(moods_data):
         with cols[i % 4]:
             is_active = m['name'] in st.session_state.moods_selected
